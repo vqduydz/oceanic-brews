@@ -1,0 +1,16 @@
+{
+  "name": "oceanic-brews",
+  "version": "1.0.0",
+  "description": "Oceanic Brews, seafood",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "oceanic",
+    "brews",
+    "seafood"
+  ],
+  "author": "Duy Vũ",
+  "license": "ISC"
+}
