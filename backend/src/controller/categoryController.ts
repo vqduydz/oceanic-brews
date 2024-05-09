@@ -1,15 +1,22 @@
-import { Request, Response, raw } from "express";
-import Category, { CategoryAttributes } from "../db/models/category";
-import Menu, { MenuAttributes } from "../db/models/menu";
-import { responseData } from "../utils";
-import generateImgPath from "../utils/generateImgPath";
+import { Request, Response } from "express";
+
+import {
+  Category,
+  CategoryAttributes,
+  Menu,
+  MenuAttributes,
+} from "../db/models";
+import { generateImgPath, responseData } from "../utils";
 
 const getCategory = async (req: Request, res: Response): Promise<Response> => {
   try {
     const categories = await Category.findAll();
-    return res
-      .status(200)
-      .send(responseData(200, "OK", null, categories, generateImgPath(req)));
+    return res.status(200).send(
+      responseData(200, "OK", null, {
+        categories,
+        imgPath: generateImgPath(req),
+      })
+    );
   } catch (error) {
     if (error != null && error instanceof Error) {
       return res
@@ -29,20 +36,18 @@ const getCategoryById = async (
   try {
     const id = req.params?.id as unknown as number;
 
-    if (!id || typeof id != "number") {
-      return res
-        .status(200)
-        .send(responseData(404, "Input must be numeric", null, null));
-    }
     const category = await Category.findByPk(id);
     if (!category) {
       return res
         .status(200)
         .send(responseData(404, "Data not found", null, null));
     }
-    return res
-      .status(200)
-      .send(responseData(200, "OK", null, category, generateImgPath(req)));
+    return res.status(200).send(
+      responseData(200, "OK", null, {
+        category,
+        imgPath: generateImgPath(req),
+      })
+    );
   } catch (error) {
     if (error != null && error instanceof Error) {
       return res
@@ -73,16 +78,11 @@ const getCategoryWithMenu = async (
     const totalPages = Math.ceil(totalCount / perPage);
 
     return res.status(200).send(
-      responseData(
-        200,
-        "OK",
-        null,
-        {
-          categories,
-          pagination: { currentPage, perPage, totalCount, totalPages },
-        },
-        generateImgPath(req)
-      )
+      responseData(200, "OK", null, {
+        categories,
+        pagination: { currentPage, perPage, totalCount, totalPages },
+        imgPath: generateImgPath(req),
+      })
     );
   } catch (error) {
     if (error != null && error instanceof Error) {
@@ -109,9 +109,12 @@ const getAllCategoryWithMenu = async (
       include: { model: Menu, as: "menus" },
     });
 
-    return res
-      .status(200)
-      .send(responseData(200, "OK", null, categories, generateImgPath(req)));
+    return res.status(200).send(
+      responseData(200, "OK", null, {
+        categories,
+        imgPath: generateImgPath(req),
+      })
+    );
   } catch (error) {
     if (error != null && error instanceof Error) {
       return res
@@ -139,9 +142,12 @@ const getAllCategoryWithMenuById = async (
         .status(200)
         .send(responseData(404, "Data not found", null, null));
     }
-    return res
-      .status(200)
-      .send(responseData(200, "OK", null, category, generateImgPath(req)));
+    return res.status(200).send(
+      responseData(200, "OK", null, {
+        category,
+        imgPath: generateImgPath(req),
+      })
+    );
   } catch (error) {
     if (error != null && error instanceof Error) {
       return res
@@ -160,16 +166,19 @@ const createCategory = async (
 ): Promise<Response> => {
   try {
     const data = req.body;
-    const category = await Category.findOne({ where: { slug: data.slug } });
-    if (category) {
+    const hasCategory = await Category.findOne({ where: { slug: data.slug } });
+    if (hasCategory) {
       return res
         .status(200)
         .send(responseData(409, "Category is exits", null, null));
     }
-    const create = await Category.create(data);
-    return res
-      .status(200)
-      .send(responseData(200, "OK", null, create, generateImgPath(req)));
+    const category = await Category.create(data);
+    return res.status(200).send(
+      responseData(200, "OK", null, {
+        category,
+        imgPath: generateImgPath(req),
+      })
+    );
   } catch (error) {
     if (error != null && error instanceof Error) {
       return res
@@ -199,7 +208,12 @@ const updateCategoryById = async (
     await category.save();
     return res
       .status(200)
-      .send(responseData(200, "Updated", null, category, generateImgPath(req)));
+      .send(
+        responseData(200, "Updated", null, {
+          category,
+          imgPath: generateImgPath(req),
+        })
+      );
   } catch (error) {
     if (error != null && error instanceof Error) {
       return res

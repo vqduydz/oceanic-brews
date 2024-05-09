@@ -1,0 +1,33 @@
+<ion-content>
+  <div><app-searchbar></app-searchbar></div>
+  <!-- Categories -->
+  <h3 class="title">Categories</h3>
+  <div>
+    <div class="categories">
+      @if(categoriesLoaded){ @for (category of categories.categories; track
+      $index) {
+      <app-category-card
+        [category]="category"
+        [imgPath]="categories.imgPath"
+      ></app-category-card>
+      } }@else {
+      <p>Loading...</p>
+      }
+    </div>
+  </div>
+  <!-- Menus -->
+  <h3 class="title">Menus</h3>
+  <div>
+    <div class="menus">
+      @if(menusLoaded){ @for (menu of menus.menus; track $index) {
+      <app-menu-card
+        (menuCardClicked)="goToDetail(menu.slug)"
+        [menu]="menu"
+        [imgPath]="menus.imgPath"
+      ></app-menu-card>
+      } }@else {
+      <p>Loading...</p>
+      }
+    </div>
+  </div>
+</ion-content>

@@ -1,0 +1,39 @@
+<div class="container">
+  <div class="header">
+    <ion-buttons>
+      <ion-button routerLink="/menus">
+        <ion-icon color="light" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons>
+      <ion-button>
+        <ion-icon color="light" name="heart-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </div>
+  @if(menuLoaded ){
+  <div class="card">
+    <div class="image">
+      <ion-img [src]="src" [alt]="src"></ion-img>
+    </div>
+    <div class="card-title">
+      <h1 class="ion-no-margin">{{menu.menu.name}}</h1>
+      <div class="rating-container">
+        <app-rating
+          class="rating"
+          [initialRating]="4.75"
+          [size]="'1rem'"
+          [space]="2"
+          [readonly]="true"
+        />
+        4.75
+        <i>(1.212 lượt)</i>
+      </div>
+      <p class="ion-no-marign">{{menu.menu.price | number }}<span>vnđ</span></p>
+    </div>
+  </div>
+  <div class="btn"><ion-button expand="block"> Add to Cart </ion-button></div>
+  }@else {
+  <p>Loading...</p>
+  }
+</div>

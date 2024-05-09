@@ -1,15 +1,18 @@
 import { Request, Response } from "express";
-import Menu from "../db/models/menu";
-import { responseData } from "../utils";
-import generateImgPath from "../utils/generateImgPath";
+
+import { Menu } from "../db/models";
+import { generateImgPath, responseData } from "../utils";
 
 const getMenu = async (req: Request, res: Response): Promise<Response> => {
   try {
     const menus = await Menu.findAll({ raw: true });
-
-    return res
-      .status(200)
-      .send(responseData(200, "OK", null, menus, generateImgPath(req)));
+    return res.status(200).send(
+      responseData(200, "OK", null, {
+        menus1: [...menus],
+        menus,
+        imgPath: generateImgPath(req),
+      })
+    );
   } catch (error) {
     if (error != null && error instanceof Error) {
       return res
@@ -38,7 +41,9 @@ const getMenuBySlug = async (
 
     return res
       .status(200)
-      .send(responseData(200, "OK", null, menu, generateImgPath(req)));
+      .send(
+        responseData(200, "OK", null, { menu, imgPath: generateImgPath(req) })
+      );
   } catch (error) {
     if (error != null && error instanceof Error) {
       return res
@@ -54,14 +59,18 @@ const getMenuBySlug = async (
 const createMenu = async (req: Request, res: Response): Promise<Response> => {
   try {
     const data = req.body;
-    const menu = await Menu.findOne({ where: { slug: data.slug } });
-    if (menu) {
+    const hasMenu = await Menu.findOne({ where: { slug: data.slug } });
+    if (hasMenu) {
       return res
         .status(200)
         .send(responseData(409, "Menu is exits", null, null));
     }
-    const create = await Menu.create(data);
-    return res.status(200).send(responseData(200, "OK", null, create));
+    const menu = await Menu.create(data);
+    return res
+      .status(200)
+      .send(
+        responseData(200, "OK", null, { menu, imgPath: generateImgPath(req) })
+      );
   } catch (error) {
     if (error != null && error instanceof Error) {
       return res
@@ -89,9 +98,12 @@ const updateMenuById = async (
     }
     menu.update(data);
     await menu.save();
-    return res
-      .status(200)
-      .send(responseData(200, "Updated", null, menu, generateImgPath(req)));
+    return res.status(200).send(
+      responseData(200, "Updated", null, {
+        menu,
+        imgPath: generateImgPath(req),
+      })
+    );
   } catch (error) {
     if (error != null && error instanceof Error) {
       return res

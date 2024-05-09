@@ -1,0 +1,6 @@
+<div class="wrapper" [ngClass]="category.active ? 'active' : ''">
+  <div class="image-card">
+    <ion-img [src]="imgPath + category.imgUrl">{{ category.name }}</ion-img>
+  </div>
+  <p class="ion-no-margin">{{ category.name }}</p>
+</div>

@@ -1,17 +1,7 @@
 import { DataTypes, Model, Optional } from "sequelize";
 import connection from "../../config/dbConnect";
 import Menu from "./menu";
-
-export interface CategoryAttributes {
-  id?: number;
-  name?: string;
-  imgUrl?: string;
-  slug?: string;
-  active?: boolean;
-
-  createdAt?: Date;
-  updatedAt?: Date;
-}
+import { CategoryAttributes } from ".";
 
 export interface CategoryInput extends Optional<CategoryAttributes, "id"> {}
 export interface CategoryOutput extends Required<CategoryAttributes> {}

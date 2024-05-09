@@ -1,0 +1,9 @@
+@for (star of stars; track $index) {
+<ion-icon
+  [style.marginRight.px]="space"
+  [style.fontSize]="size"
+  [name]="star.icon"
+  [color]="star.color"
+  (click)="rate($index + 1)"
+/>
+}

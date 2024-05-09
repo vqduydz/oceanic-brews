@@ -1,0 +1,31 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  .image-card {
+    background-color: #f3f3f3;
+    padding: 0.2rem;
+    border-radius: 1rem;
+    margin-bottom: 0.5rem;
+
+    ion-img {
+      opacity: 1;
+      border-radius: 1rem;
+      overflow: hidden;
+    }
+  }
+  p {
+    color: #c7c7c7;
+  }
+}
+
+// .wrapper.active {
+//   .image-card {
+//     background-color: #6b45bc;
+//   }
+//   p {
+//     color: #1d1d1d;
+//     font-weight: 600;
+//   }
+// }
