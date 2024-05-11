@@ -1,4 +1,4 @@
-<div class="container">
+<ion-content class="container">
   <div class="header">
     <ion-buttons>
       <ion-button routerLink="/menus">
@@ -16,24 +16,113 @@
     <div class="image">
       <ion-img [src]="src" [alt]="src"></ion-img>
     </div>
-    <div class="card-title">
+    <div class="card-title block">
       <h1 class="ion-no-margin">{{menu.menu.name}}</h1>
-      <div class="rating-container">
+      <h5 class="ion-no-margin">
         <app-rating
-          class="rating"
           [initialRating]="4.75"
-          [size]="'1rem'"
-          [space]="2"
+          [size]="'0.8rem'"
+          [space]="1"
           [readonly]="true"
         />
         4.75
-        <i>(1.212 lượt)</i>
-      </div>
+        <i>(1.212 lượt đánh giá)</i>
+      </h5>
       <p class="ion-no-marign">{{menu.menu.price | number }}<span>vnđ</span></p>
     </div>
+    <div class="desc block">
+      Cơm chiên cá mặn là món ăn từ cơm chiên cùng cá mặn rang vàng xé nhỏ,
+      trứng gà, hành, rau thơm và nước mắm, xì dầu. Vị thơm của hành, cá mặn
+      quyện với vị béo của cơm mang đến một hương vị riêng khiến cho cơm chiên
+      cá mặn trở thành một món ăn đường phố thơm ngon. Cơm chiên cá mặn vẫn là
+      một món truyền thống phổ biến với những người Hong Kong di cư ra nước
+      ngoài.
+    </div>
+    <div class="reviews block">
+      <div class="reviews-header">
+        <h2 class="ion-no-margin">
+          Đánh giá của khách hàng về "{{menu.menu.name}}"
+        </h2>
+        <div class="rating-container">
+          <app-rating
+            class="rating"
+            [initialRating]="4.75"
+            [size]="'1rem'"
+            [space]="2"
+            [readonly]="true"
+          />
+          4.75
+          <i>(1.212 lượt)</i>
+        </div>
+      </div>
+      <div class="review">
+        <div class="review-header">
+          <div class="rating-container">
+            <app-rating
+              class="rating"
+              [initialRating]="5"
+              [size]="'1rem'"
+              [space]="2"
+              [readonly]="true"
+            />
+            <ion-img
+              src="assets/images/verified.png"
+              title="Chứng nhận đã mua hàng"
+            ></ion-img>
+          </div>
+          <i class="ion-no-margin">30:50-20/04/2024</i>
+        </div>
+        <p>Bởi :&nbsp;Duy vũ</p>
+        <p class="ion-no-margin">Ngon như cơm mẹ nấu</p>
+      </div>
+      <div class="review2">
+        <div class="review-header">
+          <div class="rating-container">
+            <app-rating
+              class="rating"
+              [initialRating]="1"
+              [size]="'1rem'"
+              [space]="2"
+              [readonly]="true"
+            />
+            <ion-img
+              src="assets/images/verified.png"
+              title="Chứng nhận đã mua hàng"
+            ></ion-img>
+          </div>
+          <i class="ion-no-margin">30:50-20/04/2024</i>
+        </div>
+        <p>Bởi :&nbsp;Cứt Nát</p>
+        <p class="ion-no-margin">Như shit</p>
+      </div>
+
+      <div class="review">
+        <div class="review-header">
+          <div class="rating-container">
+            <app-rating
+              class="rating"
+              [initialRating]="2"
+              [size]="'1rem'"
+              [space]="2"
+              [readonly]="true"
+            />
+            <ion-img
+              src="assets/images/verified.png"
+              title="Chứng nhận đã mua hàng"
+            ></ion-img>
+          </div>
+          <i class="ion-no-margin">30:50-20/04/2024</i>
+        </div>
+        <p>Bởi :&nbsp;Hải Nhót</p>
+        <p class="ion-no-margin">Dở vl</p>
+      </div>
+    </div>
   </div>
-  <div class="btn"><ion-button expand="block"> Add to Cart </ion-button></div>
+  <div class="btn">
+    <ion-button> Add to Cart </ion-button>
+  </div>
+
   }@else {
-  <p>Loading...</p>
+  <div class="card">Loading...</div>
   }
-</div>
+</ion-content>

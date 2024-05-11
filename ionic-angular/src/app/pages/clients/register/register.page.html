@@ -1,0 +1,87 @@
+<div class="background"></div>
+
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+  <ion-img src="assets/icon/favicon.png"></ion-img>
+
+  <ion-input
+    placeholder="First name"
+    required
+    formControlName="firstName"
+    type="text"
+  ></ion-input>
+  <p class="ion-no-margin form-error">
+    @if ( f.firstName.touched && f.firstName.errors?.['required']) { First name
+    is required}
+  </p>
+
+  <ion-input
+    placeholder="Last name"
+    required
+    formControlName="lastName"
+    type="text"
+  ></ion-input>
+  <p class="ion-no-margin form-error">
+    @if ( f.lastName.touched && f.lastName.errors?.['required']) { Last name is
+    required}
+  </p>
+
+  <ion-input
+    placeholder="Phone number"
+    required
+    formControlName="phoneNumber"
+    type="number"
+  ></ion-input>
+  <p class="ion-no-margin form-error">
+    @if ( f.phoneNumber.touched && f.phoneNumber.errors?.['required']) { Phone
+    number is required}
+  </p>
+
+  <ion-input
+    placeholder="Email"
+    required
+    formControlName="email"
+    type="email"
+  ></ion-input>
+  <p class="ion-no-margin form-error">
+    @if ( f.email.touched ) { @if (f.email.errors?.['required']) { Email is
+    required } @else if (f.email.errors?.['email']) { Email must be a valid
+    email address } }
+  </p>
+
+  <ion-input
+    placeholder="Password"
+    required
+    formControlName="password"
+    type="password"
+  ></ion-input>
+  <p class="ion-no-margin form-error">
+    @if ( f.password.touched && f.password.errors?.['required']) { Password is
+    required}
+  </p>
+
+  <ion-input
+    placeholder="Confirm password"
+    required
+    formControlName="confirmPassword"
+    type="password"
+  ></ion-input>
+  <p class="ion-no-margin form-error">
+    @if ( f.confirmPassword.touched && f.confirmPassword.errors?.['required']) {
+    Confirm password is required} @else if (f.password.value !==
+    f.confirmPassword.value) { Confirm password does not match }
+  </p>
+
+  <ion-button
+    block
+    color="primary"
+    type="submit"
+    [disabled]="!registerForm.valid"
+  >
+    Register
+  </ion-button>
+  <div class="sub-action">
+    <i (click)="goTo('login')">Login</i> or<i (click)="goTo('fogot-password')"
+      >Forgot password</i
+    >
+  </div>
+</form>

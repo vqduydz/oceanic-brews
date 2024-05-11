@@ -56,3 +56,13 @@ ion-content {
   --padding-start: 0.5rem;
   --padding-end: 0.5rem;
 }
+
+app-rating {
+  display: flex;
+  align-items: center;
+  width: fit-content;
+}
+
+p {
+  margin: 0.5rem 0;
+}

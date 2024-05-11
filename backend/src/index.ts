@@ -1,7 +1,7 @@
 import cors from "cors";
 import dotenv from "dotenv";
 import express, { Request, Response } from "express";
-
+import sequelize from "./config/dbConnect";
 import router from "./routes/routes";
 
 dotenv.config();
@@ -19,5 +19,20 @@ app.get("/", (req: Request, res: Response) => {
 
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
-  console.log("_________________________________");
 });
+
+// connect to database
+
+(async () => {
+  try {
+    await sequelize.authenticate();
+    console.log(
+      "Connection to the database has been established successfully."
+    );
+    console.log(
+      "_____________________________________________________________"
+    );
+  } catch (error) {
+    console.error("Unable to connect to the database:", error);
+  }
+})();

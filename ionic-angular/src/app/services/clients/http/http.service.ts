@@ -8,6 +8,8 @@ import { Observable } from 'rxjs';
 export class HttpService {
   private API_SERVER = 'http://192.168.1.112:8080/api';
 
+  hasUser: boolean = false;
+
   constructor(private http: HttpClient) {}
 
   getCategories(): Observable<any> {

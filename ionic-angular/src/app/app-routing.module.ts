@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { canActivate } from './utils/routeGuard';
 
 const routes: Routes = [
   {
@@ -16,6 +17,7 @@ const routes: Routes = [
   },
   {
     path: '',
+    canActivate: [canActivate],
     loadChildren: () =>
       import('./pages/clients/main/main.module').then((m) => m.MainPageModule),
   },
@@ -28,8 +30,29 @@ const routes: Routes = [
   },
   {
     path: 'menu/:slug',
+    canActivate: [canActivate],
     loadChildren: () =>
       import('./pages/clients/menu/menu.module').then((m) => m.MenuPageModule),
+  },
+  {
+    path: 'login',
+    canActivate: [canActivate],
+    loadChildren: () =>
+      import('./pages/clients/login/login.module').then(
+        (m) => m.LoginPageModule
+      ),
+  },
+  {
+    path: 'register',
+    canActivate: [canActivate],
+    loadChildren: () =>
+      import('./pages/clients/register/register.module').then(
+        (m) => m.RegisterPageModule
+      ),
+  },
+  {
+    path: 'fogot-password',
+    loadChildren: () => import('./pages/clients/fogot-password/fogot-password.module').then( m => m.FogotPasswordPageModule)
   },
 ];
 

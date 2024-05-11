@@ -8,7 +8,6 @@ const getMenu = async (req: Request, res: Response): Promise<Response> => {
     const menus = await Menu.findAll({ raw: true });
     return res.status(200).send(
       responseData(200, "OK", null, {
-        menus1: [...menus],
         menus,
         imgPath: generateImgPath(req),
       })
