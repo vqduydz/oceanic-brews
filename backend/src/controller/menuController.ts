@@ -7,7 +7,7 @@ const getMenu = async (req: Request, res: Response): Promise<Response> => {
   try {
     const menus = await Menu.findAll({ raw: true });
     return res.status(200).send(
-      responseData(200, "OK", null, {
+      responseData(200, true, "OK", null, {
         menus,
         imgPath: generateImgPath(req),
       })
@@ -16,11 +16,11 @@ const getMenu = async (req: Request, res: Response): Promise<Response> => {
     if (error != null && error instanceof Error) {
       return res
         .status(500)
-        .send(responseData(500, error.message, error, null));
+        .send(responseData(500, false, error.message, error, null));
     }
     return res
       .status(500)
-      .send(responseData(500, "Internal server error", error, null));
+      .send(responseData(500, false, "Internal server error", error, null));
   }
 };
 
@@ -35,23 +35,26 @@ const getMenuBySlug = async (
     if (!menu) {
       return res
         .status(200)
-        .send(responseData(404, "Data not found", null, null));
+        .send(responseData(404, false, "Data not found", null, null));
     }
 
     return res
       .status(200)
       .send(
-        responseData(200, "OK", null, { menu, imgPath: generateImgPath(req) })
+        responseData(200, true, "OK", null, {
+          menu,
+          imgPath: generateImgPath(req),
+        })
       );
   } catch (error) {
     if (error != null && error instanceof Error) {
       return res
         .status(500)
-        .send(responseData(500, error.message, error, null));
+        .send(responseData(500, false, error.message, error, null));
     }
     return res
       .status(500)
-      .send(responseData(500, "Internal server error", error, null));
+      .send(responseData(500, false, "Internal server error", error, null));
   }
 };
 
@@ -62,23 +65,26 @@ const createMenu = async (req: Request, res: Response): Promise<Response> => {
     if (hasMenu) {
       return res
         .status(200)
-        .send(responseData(409, "Menu is exits", null, null));
+        .send(responseData(409, false, "Menu is exits", null, null));
     }
     const menu = await Menu.create(data);
     return res
       .status(200)
       .send(
-        responseData(200, "OK", null, { menu, imgPath: generateImgPath(req) })
+        responseData(200, true, "OK", null, {
+          menu,
+          imgPath: generateImgPath(req),
+        })
       );
   } catch (error) {
     if (error != null && error instanceof Error) {
       return res
         .status(500)
-        .send(responseData(500, error.message, error, null));
+        .send(responseData(500, false, error.message, error, null));
     }
     return res
       .status(500)
-      .send(responseData(500, "Internal server error", error, null));
+      .send(responseData(500, false, "Internal server error", error, null));
   }
 };
 
@@ -93,12 +99,12 @@ const updateMenuById = async (
     if (!menu) {
       return res
         .status(200)
-        .send(responseData(404, "Data not found", null, null));
+        .send(responseData(404, false, "Data not found", null, null));
     }
     menu.update(data);
     await menu.save();
     return res.status(200).send(
-      responseData(200, "Updated", null, {
+      responseData(200, true, "Updated", null, {
         menu,
         imgPath: generateImgPath(req),
       })
@@ -107,11 +113,11 @@ const updateMenuById = async (
     if (error != null && error instanceof Error) {
       return res
         .status(500)
-        .send(responseData(500, error.message, error, null));
+        .send(responseData(500, false, error.message, error, null));
     }
     return res
       .status(500)
-      .send(responseData(500, "Internal server error", error, null));
+      .send(responseData(500, false, "Internal server error", error, null));
   }
 };
 
@@ -125,19 +131,19 @@ const deleteMenuById = async (
     if (!menu) {
       return res
         .status(200)
-        .send(responseData(404, "Data not found", null, null));
+        .send(responseData(404, false, "Data not found", null, null));
     }
     await menu.destroy();
-    return res.status(200).send(responseData(200, "Deleted", null, null));
+    return res.status(200).send(responseData(200, true, "Deleted", null, null));
   } catch (error) {
     if (error != null && error instanceof Error) {
       return res
         .status(500)
-        .send(responseData(500, error.message, error, null));
+        .send(responseData(500, false, error.message, error, null));
     }
     return res
       .status(500)
-      .send(responseData(500, "Internal server error", error, null));
+      .send(responseData(500, false, "Internal server error", error, null));
   }
 };
 

@@ -52,7 +52,17 @@ const routes: Routes = [
   },
   {
     path: 'fogot-password',
-    loadChildren: () => import('./pages/clients/fogot-password/fogot-password.module').then( m => m.FogotPasswordPageModule)
+    loadChildren: () =>
+      import('./pages/clients/fogot-password/fogot-password.module').then(
+        (m) => m.FogotPasswordPageModule
+      ),
+  },
+  {
+    path: 'reset-password/:token',
+    loadChildren: () =>
+      import('./pages/clients/reset-password/reset-password.module').then(
+        (m) => m.ResetPasswordPageModule
+      ),
   },
 ];
 

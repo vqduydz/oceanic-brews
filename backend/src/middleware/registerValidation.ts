@@ -25,18 +25,18 @@ const registerValidation = async (
       confirmPassword,
       firstName,
       lastName,
-      gender,
+      gender: gender || "Other",
       phoneNumber,
     };
 
     const rules: Validator.Rules = {
       email: "required|email",
-      password: "required|min:8",
+      password: "required|min:6",
       confirmPassword: "required|same:password",
       firstName: "required|string|max:50",
       lastName: "required|string|max:50",
       gender: "required|string",
-      phoneNumber: "required|number",
+      phoneNumber: "required",
     };
 
     const validate = new Validator(data, rules);
@@ -44,7 +44,7 @@ const registerValidation = async (
     if (validate.fails()) {
       return res
         .status(400)
-        .send(responseData(400, "Bad Request", validate.errors, null));
+        .send(responseData(400, false, "Bad Request", validate.errors, null));
     }
 
     const user = await User.findOne({
@@ -53,11 +53,14 @@ const registerValidation = async (
     if (user) {
       return res
         .status(400)
-        .send(responseData(400, "Email already used", null, null));
+        .send(responseData(400, false, "Email already used", null, null));
     }
+    req.body = data;
     next();
   } catch (error: any) {
-    return res.status(500).send(responseData(500, "", error, null));
+    console.log("60---", error);
+
+    return res.status(500).send(responseData(500, false, "", error, null));
   }
 };
 

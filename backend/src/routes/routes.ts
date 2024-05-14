@@ -1,11 +1,12 @@
 import express from "express";
 import path from "path";
-import { registerValidation } from "../middleware";
+import { registerValidation, resetPasswordValidation } from "../middleware";
 import {
   authController,
   categoryController,
   menuController,
 } from "../controller";
+import Authorization from "../middleware/Authorization";
 const router = express.Router();
 
 //category
@@ -27,9 +28,16 @@ router.delete("/menu/:id", menuController.deleteMenuById);
 
 //auth
 router.post("/register", registerValidation, authController.register);
-// router.post("/login", UserController.UserLogin);
-// router.get("/refresh-token", UserController.RefreshToken);
-// router.get("/logout", Authorization.Authenticated, UserController.UserLogout);
+router.post("/login", authController.UserLogin);
+router.get("/refresh-token", authController.refreshToken);
+router.get("/logout", Authorization.Authenticated, authController.UserLogout);
+router.post("/fogot-password", authController.forgotPassword);
+router.patch(
+  "/reset-password",
+  Authorization.Authenticated,
+  resetPasswordValidation,
+  authController.resetPassword
+);
 
 //user
 // router.get("/current-user", Authorization.Authenticated, UserController.UserDetail);

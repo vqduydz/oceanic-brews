@@ -7,7 +7,7 @@ const getAllUsers = async (req: Request, res: Response): Promise<Response> => {
   try {
     const users = await User.findAll({ raw: true });
     return res.status(200).send(
-      responseData(200, "OK", null, {
+      responseData(200, true, "OK", null, {
         users,
         imgPath: generateImgPath(req),
       })
@@ -16,11 +16,11 @@ const getAllUsers = async (req: Request, res: Response): Promise<Response> => {
     if (error != null && error instanceof Error) {
       return res
         .status(500)
-        .send(responseData(500, error.message, error, null));
+        .send(responseData(500, false, error.message, error, null));
     }
     return res
       .status(500)
-      .send(responseData(500, "Internal server error", error, null));
+      .send(responseData(500, false, "Internal server error", error, null));
   }
 };
 
@@ -38,7 +38,7 @@ const getUsers = async (req: Request, res: Response): Promise<Response> => {
     const totalPages = Math.ceil(totalCount / perPage);
 
     return res.status(200).send(
-      responseData(200, "OK", null, {
+      responseData(200, true, "OK", null, {
         users,
         pagination: { currentPage, perPage, totalCount, totalPages },
         imgPath: generateImgPath(req),
@@ -48,11 +48,11 @@ const getUsers = async (req: Request, res: Response): Promise<Response> => {
     if (error != null && error instanceof Error) {
       return res
         .status(500)
-        .send(responseData(500, error.message, error, null));
+        .send(responseData(500, false, error.message, error, null));
     }
     return res
       .status(500)
-      .send(responseData(500, "Internal server error", error, null));
+      .send(responseData(500, false, "Internal server error", error, null));
   }
 };
 
@@ -64,10 +64,10 @@ const getUserById = async (req: Request, res: Response): Promise<Response> => {
     if (!user) {
       return res
         .status(200)
-        .send(responseData(404, "Data not found", null, null));
+        .send(responseData(404, false, "Data not found", null, null));
     }
     return res.status(200).send(
-      responseData(200, "OK", null, {
+      responseData(200, true, "OK", null, {
         user,
         imgPath: generateImgPath(req),
       })
@@ -76,11 +76,11 @@ const getUserById = async (req: Request, res: Response): Promise<Response> => {
     if (error != null && error instanceof Error) {
       return res
         .status(500)
-        .send(responseData(500, error.message, error, null));
+        .send(responseData(500, false, error.message, error, null));
     }
     return res
       .status(500)
-      .send(responseData(500, "Internal server error", error, null));
+      .send(responseData(500, false, "Internal server error", error, null));
   }
 };
 

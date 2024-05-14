@@ -1,22 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/clients/auth/auth.service';
 
 @Component({
   selector: 'app-fogot-password',
   templateUrl: './fogot-password.page.html',
-  styleUrls: ['./fogot-password.page.scss'],
+  styleUrls: ['./fogot-password.page.scss', '../auth.scss'],
 })
 export class FogotPasswordPage implements OnInit {
   loginForm = this.formBuilder.group({
-    email: ['', [Validators.required, Validators.email]],
+    email: ['vqduydz.learn@gmail.com', [Validators.required, Validators.email]],
   });
 
-  constructor(private formBuilder: FormBuilder, private router: Router) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private auth: AuthService
+  ) {}
 
   ngOnInit() {}
 
-  // convenience getter for easy access to form fields
   get f() {
     return this.loginForm.controls;
   }
@@ -28,6 +32,13 @@ export class FogotPasswordPage implements OnInit {
     if (this.loginForm.invalid) {
       return;
     }
-    console.log(this.loginForm.value);
+    this.auth.forgotPassword(this.loginForm.value).subscribe(
+      (res) => {
+        console.log(res);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 }

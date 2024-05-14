@@ -5,21 +5,22 @@ import {
   Router,
   RouterStateSnapshot,
 } from '@angular/router';
-import { HttpService } from '../services/clients/http/http.service';
+import { AuthService } from '../services/clients/auth/auth.service';
 
 export const canActivate: CanActivateFn = (
   route: ActivatedRouteSnapshot,
   state: RouterStateSnapshot
 ) => {
   const url = state.url;
-  if (inject(HttpService).hasUser) {
+
+  if (inject(AuthService).IsLoggedIn()) {
     if (
       url.includes('/login') ||
       url.includes('/register') ||
-      url.includes('/forgotpassword') ||
+      url.includes('/fogot-password') ||
       url.includes('/resetpassword')
     ) {
-      inject(Router).navigate(['/home']);
+      inject(Router).navigate(['/profile']);
       return false;
     }
     return true;
@@ -27,7 +28,7 @@ export const canActivate: CanActivateFn = (
     if (
       url.includes('/login') ||
       url.includes('/register') ||
-      url.includes('/forgotpassword') ||
+      url.includes('/fogot-password') ||
       url.includes('/resetpassword')
     ) {
       return true;

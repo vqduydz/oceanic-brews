@@ -4,23 +4,27 @@ import dotenv from "dotenv";
 dotenv.config();
 
 interface UserData {
-  name: string | null;
+  firstName: string | null;
+  lastName: string | null;
   email: string | null;
   verified: boolean | null;
   active: boolean | null;
 }
 
-const generateToken = (data: any): string => {
+const generateToken = (data: any, expiresIn?: string | number): string => {
   const token = jwt.sign(data, process.env.JWT_TOKEN as string, {
-    expiresIn: "24h",
+    expiresIn: expiresIn || "1h",
   });
 
   return token;
 };
 
-const generateRefreshToken = (data: any): string => {
+const generateRefreshToken = (
+  data: any,
+  expiresIn?: string | number
+): string => {
   const token = jwt.sign(data, process.env.JWT_REFRESH_TOKEN as string, {
-    expiresIn: "1d",
+    expiresIn: expiresIn || "14d",
   });
 
   return token;

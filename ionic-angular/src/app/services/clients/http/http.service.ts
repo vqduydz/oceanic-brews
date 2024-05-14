@@ -6,7 +6,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class HttpService {
-  private API_SERVER = 'http://192.168.1.112:8080/api';
+  // private API_SERVER = 'http://192.168.1.112:8080/api';
+  private API_SERVER = 'https://oceanicbrews.com:8080/api';
+  // private API_SERVER = 'localhost:8080/api';
 
   hasUser: boolean = false;
 

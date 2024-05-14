@@ -12,7 +12,7 @@ const getCategory = async (req: Request, res: Response): Promise<Response> => {
   try {
     const categories = await Category.findAll();
     return res.status(200).send(
-      responseData(200, "OK", null, {
+      responseData(200, true, "OK", null, {
         categories,
         imgPath: generateImgPath(req),
       })
@@ -21,11 +21,11 @@ const getCategory = async (req: Request, res: Response): Promise<Response> => {
     if (error != null && error instanceof Error) {
       return res
         .status(500)
-        .send(responseData(500, error.message, error, null));
+        .send(responseData(500, false, error.message, error, null));
     }
     return res
       .status(500)
-      .send(responseData(500, "Internal server error", error, null));
+      .send(responseData(500, false, "Internal server error", error, null));
   }
 };
 
@@ -40,10 +40,10 @@ const getCategoryById = async (
     if (!category) {
       return res
         .status(200)
-        .send(responseData(404, "Data not found", null, null));
+        .send(responseData(404, false, "Data not found", null, null));
     }
     return res.status(200).send(
-      responseData(200, "OK", null, {
+      responseData(200, true, "OK", null, {
         category,
         imgPath: generateImgPath(req),
       })
@@ -52,11 +52,11 @@ const getCategoryById = async (
     if (error != null && error instanceof Error) {
       return res
         .status(500)
-        .send(responseData(500, error.message, error, null));
+        .send(responseData(500, false, error.message, error, null));
     }
     return res
       .status(500)
-      .send(responseData(500, "Internal server error", error, null));
+      .send(responseData(500, false, "Internal server error", error, null));
   }
 };
 
@@ -78,7 +78,7 @@ const getCategoryWithMenu = async (
     const totalPages = Math.ceil(totalCount / perPage);
 
     return res.status(200).send(
-      responseData(200, "OK", null, {
+      responseData(200, true, "OK", null, {
         categories,
         pagination: { currentPage, perPage, totalCount, totalPages },
         imgPath: generateImgPath(req),
@@ -88,11 +88,11 @@ const getCategoryWithMenu = async (
     if (error != null && error instanceof Error) {
       return res
         .status(500)
-        .send(responseData(500, error.message, error, null));
+        .send(responseData(500, false, error.message, error, null));
     }
     return res
       .status(500)
-      .send(responseData(500, "Internal server error", error, null));
+      .send(responseData(500, false, "Internal server error", error, null));
   }
 };
 
@@ -110,7 +110,7 @@ const getAllCategoryWithMenu = async (
     });
 
     return res.status(200).send(
-      responseData(200, "OK", null, {
+      responseData(200, true, "OK", null, {
         categories,
         imgPath: generateImgPath(req),
       })
@@ -119,11 +119,11 @@ const getAllCategoryWithMenu = async (
     if (error != null && error instanceof Error) {
       return res
         .status(500)
-        .send(responseData(500, error.message, error, null));
+        .send(responseData(500, false, error.message, error, null));
     }
     return res
       .status(500)
-      .send(responseData(500, "Internal server error", error, null));
+      .send(responseData(500, false, "Internal server error", error, null));
   }
 };
 
@@ -140,10 +140,10 @@ const getAllCategoryWithMenuById = async (
     if (!category) {
       return res
         .status(200)
-        .send(responseData(404, "Data not found", null, null));
+        .send(responseData(404, false, "Data not found", null, null));
     }
     return res.status(200).send(
-      responseData(200, "OK", null, {
+      responseData(200, true, "OK", null, {
         category,
         imgPath: generateImgPath(req),
       })
@@ -152,11 +152,11 @@ const getAllCategoryWithMenuById = async (
     if (error != null && error instanceof Error) {
       return res
         .status(500)
-        .send(responseData(500, error.message, error, null));
+        .send(responseData(500, false, error.message, error, null));
     }
     return res
       .status(500)
-      .send(responseData(500, "Internal server error", error, null));
+      .send(responseData(500, false, "Internal server error", error, null));
   }
 };
 
@@ -170,11 +170,11 @@ const createCategory = async (
     if (hasCategory) {
       return res
         .status(200)
-        .send(responseData(409, "Category is exits", null, null));
+        .send(responseData(409, false, "Category is exits", null, null));
     }
     const category = await Category.create(data);
     return res.status(200).send(
-      responseData(200, "OK", null, {
+      responseData(200, true, "OK", null, {
         category,
         imgPath: generateImgPath(req),
       })
@@ -183,11 +183,11 @@ const createCategory = async (
     if (error != null && error instanceof Error) {
       return res
         .status(500)
-        .send(responseData(500, error.message, error, null));
+        .send(responseData(500, false, error.message, error, null));
     }
     return res
       .status(500)
-      .send(responseData(500, "Internal server error", error, null));
+      .send(responseData(500, false, "Internal server error", error, null));
   }
 };
 
@@ -202,27 +202,25 @@ const updateCategoryById = async (
     if (!category) {
       return res
         .status(200)
-        .send(responseData(404, "Data not found", null, null));
+        .send(responseData(404, false, "Data not found", null, null));
     }
     category.update(data);
     await category.save();
-    return res
-      .status(200)
-      .send(
-        responseData(200, "Updated", null, {
-          category,
-          imgPath: generateImgPath(req),
-        })
-      );
+    return res.status(200).send(
+      responseData(200, true, "Updated", null, {
+        category,
+        imgPath: generateImgPath(req),
+      })
+    );
   } catch (error) {
     if (error != null && error instanceof Error) {
       return res
         .status(500)
-        .send(responseData(500, error.message, error, null));
+        .send(responseData(500, false, error.message, error, null));
     }
     return res
       .status(500)
-      .send(responseData(500, "Internal server error", error, null));
+      .send(responseData(500, false, "Internal server error", error, null));
   }
 };
 
@@ -236,19 +234,19 @@ const deleteCategoryById = async (
     if (!category) {
       return res
         .status(200)
-        .send(responseData(404, "Data not found", null, null));
+        .send(responseData(404, false, "Data not found", null, null));
     }
     await category.destroy();
-    return res.status(200).send(responseData(200, "Deleted", null, null));
+    return res.status(200).send(responseData(200, true, "Deleted", null, null));
   } catch (error) {
     if (error != null && error instanceof Error) {
       return res
         .status(500)
-        .send(responseData(500, error.message, error, null));
+        .send(responseData(500, false, error.message, error, null));
     }
     return res
       .status(500)
-      .send(responseData(500, "Internal server error", error, null));
+      .send(responseData(500, false, "Internal server error", error, null));
   }
 };
 

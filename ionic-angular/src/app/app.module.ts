@@ -1,12 +1,21 @@
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ErrorInterceptor } from './services/clients/http/interceptor';
+// import { ErrorInterceptor } from './services/clients/http/interceptor';
+import { AuthService } from './services/clients/auth/auth.service';
+import {
+  AuthInterceptor,
+  ResponseInterceptor,
+} from './services/clients/http/interceptor';
+
+export function initApp(authService: AuthService) {
+  return () => authService.IsLoggedIn();
+}
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,8 +27,20 @@ import { ErrorInterceptor } from './services/clients/http/interceptor';
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ResponseInterceptor, multi: true },
+    AuthService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initApp,
+      deps: [AuthService],
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+  ngOnInit(): void {
+    console.log(123);
+  }
+}
