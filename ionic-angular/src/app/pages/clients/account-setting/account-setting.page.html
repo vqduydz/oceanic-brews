@@ -1,0 +1,60 @@
+@if(currentUser){<ion-content>
+  <div class="header">
+    <ion-buttons>
+      <ion-button routerLink="/profile">
+        <ion-icon color="light" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <h2 class="ion-no-margin">Account Setting</h2>
+  </div>
+  <div class="avatar-container">
+    <div class="avatar">
+      <app-avatar
+        [imgUrl]="imgPath+currentUser.avatar"
+        [name]="currentUser.firstName + ' ' +currentUser.lastName"
+      />
+      <button><ion-icon name="camera-reverse"></ion-icon></button>
+    </div>
+  </div>
+  <div class="body">
+    <form [formGroup]="updateForm" (ngSubmit)="onSubmit()">
+      @for (item of updateFormInit; track $index) {
+      <div class="item">
+        <div class="block">
+          <ion-label>{{ item.label }}</ion-label>
+          <ion-input
+            #inputElement
+            [readonly]="true"
+            [type]="item.type"
+            [placeholder]="item.label"
+            [formControlName]="item.controlName"
+          ></ion-input>
+          <ion-button fill="clear" (click)="editEnable(inputElement)">
+            <ion-icon name="pencil" />
+          </ion-button>
+        </div>
+      </div>
+      }
+      <div class="item">
+        <div class="block">
+          <ion-label>Gender</ion-label>
+          <ion-select
+            interface="action-sheet"
+            placeholder="Select gender"
+            formControlName="gender"
+          >
+            <ion-select-option value="other">Other</ion-select-option>
+            <ion-select-option value="female">Female</ion-select-option>
+            <ion-select-option value="male">Male</ion-select-option>
+          </ion-select>
+        </div>
+      </div>
+      <div class="btn">
+        <ion-button type="submit">Submit</ion-button>
+      </div>
+    </form>
+  </div>
+</ion-content>
+}@else {
+<p>Loading .....</p>
+}

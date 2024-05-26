@@ -26,25 +26,12 @@ Category.init(
       primaryKey: true,
       autoIncrement: true,
       allowNull: false,
-      type: DataTypes.BIGINT,
+      type: DataTypes.INTEGER,
     },
-    name: {
-      unique: true,
-      allowNull: false,
-      type: DataTypes.STRING,
-    },
-    slug: {
-      unique: true,
-      allowNull: false,
-      type: DataTypes.STRING,
-    },
-    imgUrl: {
-      type: DataTypes.STRING,
-    },
-    active: {
-      allowNull: false,
-      type: DataTypes.BOOLEAN,
-    },
+    name: { unique: true, allowNull: false, type: DataTypes.STRING },
+    slug: { unique: true, allowNull: false, type: DataTypes.STRING },
+    imgUrl: { type: DataTypes.STRING },
+    active: { allowNull: false, type: DataTypes.BOOLEAN },
   },
   { timestamps: true, sequelize: connection, underscored: false }
 );

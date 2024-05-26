@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ResCategoriesWithMenus, ResMenus } from 'src/app/interface';
 import { HttpService } from 'src/app/services/clients/http/http.service';
 
@@ -8,12 +8,15 @@ import { HttpService } from 'src/app/services/clients/http/http.service';
   templateUrl: './menus.page.html',
   styleUrls: ['./menus.page.scss', '../client.scss'],
 })
-export class MenusPage implements OnInit {
-  constructor(private httpService: HttpService, private router: Router) {}
+export class MenusPage {
+  origin!: string;
+
+  constructor(private httpService: HttpService, private router: Router) {
+    this.origin = this.router.url;
+  }
 
   categories!: ResCategoriesWithMenus;
   menus!: ResMenus;
-
   categoriesLoaded: boolean = false;
   menusLoaded: boolean = false;
 
@@ -32,7 +35,9 @@ export class MenusPage implements OnInit {
   }
 
   goToDetail(slug: string) {
-    this.router.navigate(['menu', slug]);
+    this.router.navigate(['menu', slug], {
+      queryParams: { origin: this.origin },
+    });
   }
 
   ngOnInit() {

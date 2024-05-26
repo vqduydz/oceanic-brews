@@ -1,22 +1,38 @@
 <ion-content class="container">
   <div class="header">
     <ion-buttons>
-      <ion-button routerLink="/menus">
+      <ion-button [routerLink]=" origin || '/menus'">
         <ion-icon color="light" name="arrow-back-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-buttons>
+
+    @if(!error){ @if(currentUser){ @if ( !liked ) {
+    <ion-buttons (click)="toggleLike(menu.menu.id)">
       <ion-button>
         <ion-icon color="light" name="heart-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
+    } @else {
+    <ion-buttons (click)="toggleLike(menu.menu.id)">
+      <ion-button>
+        <ion-icon color="light" name="heart"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    }}}
   </div>
-  @if(menuLoaded ){
+  @if(menuLoaded){ @if (error) {
+  <p>Error link</p>
+  } @else {
+
   <div class="card">
     <div class="image">
-      <ion-img [src]="src" [alt]="src"></ion-img>
+      <app-image
+        style="border-radius: 50%; display: block"
+        [imgUrl]="menu.imgPath+menu.menu.imgUrl"
+      />
+      <!-- <ion-img [src]="menu.imgPath+menu.menu.imgUrl" [alt]=""></ion-img> -->
     </div>
-    <div class="card-title block">
+    <div style="display: block" class="card-title block">
       <h1 class="ion-no-margin">{{menu.menu.name}}</h1>
       <h5 class="ion-no-margin">
         <app-rating
@@ -31,12 +47,22 @@
       <p class="ion-no-marign">{{menu.menu.price | number }}<span>vnđ</span></p>
     </div>
     <div class="desc block">
-      Cơm chiên cá mặn là món ăn từ cơm chiên cùng cá mặn rang vàng xé nhỏ,
-      trứng gà, hành, rau thơm và nước mắm, xì dầu. Vị thơm của hành, cá mặn
-      quyện với vị béo của cơm mang đến một hương vị riêng khiến cho cơm chiên
-      cá mặn trở thành một món ăn đường phố thơm ngon. Cơm chiên cá mặn vẫn là
-      một món truyền thống phổ biến với những người Hong Kong di cư ra nước
-      ngoài.
+      <h2>Mô tả "{{menu.menu.name}}"</h2>
+      <p>{{menu.menu.desc}}</p>
+    </div>
+    <div class="suggested-menus block">
+      <h2 class="ion-no-margin">Gợi ý các món cùng danh mục</h2>
+      <div class="menus">
+        @if(suggestedMenus){ @for (menu of suggestedMenus.menus; track $index) {
+        <app-menu-card
+          (menuCardClicked)="goToDetail(menu.slug)"
+          [menu]="menu"
+          [imgPath]="suggestedMenus.imgPath"
+        ></app-menu-card>
+        } }@else {
+        <p>Loading...</p>
+        }
+      </div>
     </div>
     <div class="reviews block">
       <div class="reviews-header">
@@ -121,8 +147,7 @@
   <div class="btn">
     <ion-button> Add to Cart </ion-button>
   </div>
-
-  }@else {
+  } }@else {
   <div class="card">Loading...</div>
   }
 </ion-content>

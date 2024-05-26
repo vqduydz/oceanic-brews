@@ -25,9 +25,7 @@ app.use(bodyParser.urlencoded({ extended: true, limit: "10mb" }));
 app.use("/api", router);
 
 app.get("/", (req: Request, res: Response) => {
-  console.log("Cookies: ", req.cookies);
-  // Cookies that have been signed
-  console.log("Signed Cookies: ", req.signedCookies);
+  return res.status(200).send({ response: "Duy Vũ" });
 });
 
 https

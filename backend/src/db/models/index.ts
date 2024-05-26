@@ -16,6 +16,7 @@ export interface MenuAttributes {
   categoryId?: number;
   price?: number;
   desc?: string;
+  favoriteBy?: string;
   active?: boolean;
   createdAt?: Date;
   updatedAt?: Date;
@@ -27,14 +28,23 @@ export interface UserAttributes {
   password?: string;
   firstName?: string;
   lastName?: string;
-  phoneNumber?: number;
+  phoneNumber?: string;
   gender?: string;
   avatar?: string;
   places?: string;
+  role?: string;
   active?: boolean;
   verified?: boolean;
   birthday?: Date;
-  accessToken?: string;
+  favorites?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+export interface FavouriteAttributes {
+  id?: number;
+  userId?: number;
+  menuId?: number;
   createdAt?: Date;
   updatedAt?: Date;
 }

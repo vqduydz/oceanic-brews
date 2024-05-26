@@ -1,13 +1,16 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { BehaviorSubject, Observable, lastValueFrom } from 'rxjs';
+import { CurrentUser, ResCurrentUser } from 'src/app/interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  // private API_SERVER = 'http://192.168.1.112:8080/api';
   API_SERVER = 'https://oceanicbrews.com:8080/api';
-  // private API_SERVER = 'localhost.com:8080/api';
+  private currentUserSubject = new BehaviorSubject<any>(null);
+  public currentUser$ = this.currentUserSubject.asObservable();
 
   getAccessToken(): string | null {
     return localStorage.getItem('access-token');
@@ -30,7 +33,8 @@ export class AuthService {
     };
   }
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
+
   register(payload: any) {
     const url = `${this.API_SERVER}/register`;
     return this.http.post<any>(url, payload);
@@ -58,6 +62,7 @@ export class AuthService {
     const url = `${this.API_SERVER}/fogot-password`;
     return this.http.post<any>(url, payload, this.httpOptions);
   }
+
   resetPassword(payload: any, token: string) {
     const url = `${this.API_SERVER}/reset-password`;
     return this.http.patch<any>(
@@ -67,7 +72,7 @@ export class AuthService {
     );
   }
 
-  IsLoggedIn(): boolean {
+  isLoggedIn(): boolean {
     return !!localStorage.getItem('access-token');
   }
 
@@ -88,5 +93,50 @@ export class AuthService {
 
   removeItemToLocalStorage(key: string) {
     localStorage.removeItem(key);
+  }
+
+  getCurrentUser() {
+    const url = `${this.API_SERVER}/current-user`;
+    return this.http.get<any>(
+      url,
+      this.httpOptionsWithAuthorized(this.getAccessToken())
+    );
+  }
+
+  setCurrentUser(user: any) {
+    this.currentUserSubject.next(user);
+  }
+
+  selfUpdateUser(payload: any): Observable<any> {
+    const url = `${this.API_SERVER}/self-update-user`;
+    return this.http.patch<any>(
+      url,
+      payload,
+      this.httpOptionsWithAuthorized(this.getAccessToken())
+    );
+  }
+
+  async initCurrentUser() {
+    try {
+      const response = await lastValueFrom(this.getCurrentUser());
+      this.currentUserSubject.next(response.data);
+    } catch (error) {
+      if (this.isLoggedIn()) {
+        this.removeItemToLocalStorage('access-token');
+        this.router.navigate(['/login']);
+      }
+    }
+  }
+
+  async updateUserAndReGetCurrentUser(payload: any) {
+    try {
+      const response = await lastValueFrom(this.selfUpdateUser(payload));
+      this.currentUserSubject.next(response.data);
+    } catch (error) {
+      if (this.isLoggedIn()) {
+        this.removeItemToLocalStorage('access-token');
+        this.router.navigate(['/login']);
+      }
+    }
   }
 }

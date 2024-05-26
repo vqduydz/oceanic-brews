@@ -1,0 +1,41 @@
+ion-content {
+  --padding-bottom: 0px;
+  --padding-end: 0px;
+  --padding-start: 0px;
+  --padding-top: 0px;
+  --padding-start: 0;
+  --padding-end: 0;
+  min-width: 768px;
+  div.inner-scroll.scroll-y {
+    right: unset;
+  }
+}
+
+.header {
+  min-width: 768px;
+  height: 60px;
+  background-color: #0054e9;
+  display: flex;
+  align-items: center;
+  padding: 0.2rem 1rem;
+  ion-buttons,
+  ion-title,
+  app-avatar,
+  ion-menu-button {
+    --color: #fff !important;
+    color: #fff !important;
+    width: fit-content;
+    font-weight: 700;
+    font-size: 1.5rem;
+  }
+}
+.model-container {
+  position: fixed;
+  height: 100%;
+  top: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  background-color: #0054e9;
+  z-index: 1000;
+}

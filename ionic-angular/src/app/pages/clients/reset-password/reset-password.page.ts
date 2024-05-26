@@ -8,7 +8,7 @@ import { AuthService } from 'src/app/services/clients/auth/auth.service';
   templateUrl: './reset-password.page.html',
   styleUrls: ['./reset-password.page.scss', '../auth.scss'],
 })
-export class ResetPasswordPage implements OnInit {
+export class ResetPasswordPage {
   resetPassForm = this.formBuilder.group({
     password: ['', Validators.required],
     confirmPassword: ['', Validators.required],
@@ -20,8 +20,6 @@ export class ResetPasswordPage implements OnInit {
     private auth: AuthService,
     private activedRoute: ActivatedRoute
   ) {}
-
-  ngOnInit() {}
 
   get f() {
     return this.resetPassForm.controls;

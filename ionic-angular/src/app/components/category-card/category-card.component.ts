@@ -6,11 +6,8 @@ import { Category } from 'src/app/interface';
   templateUrl: './category-card.component.html',
   styleUrls: ['./category-card.component.scss'],
 })
-export class CategoryCardComponent implements OnInit {
+export class CategoryCardComponent {
   @Input() category!: Category;
   @Input() imgPath!: string;
   @Output() categoryClicked = new EventEmitter();
-  constructor() {}
-
-  ngOnInit() {}
 }

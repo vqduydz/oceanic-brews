@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
 
 import { Menu } from "../db/models";
-import { generateImgPath, responseData } from "../utils";
+import { imgHelper, responseData } from "../utils";
+import { Op } from "sequelize";
 
 const getMenu = async (req: Request, res: Response): Promise<Response> => {
   try {
@@ -9,7 +10,7 @@ const getMenu = async (req: Request, res: Response): Promise<Response> => {
     return res.status(200).send(
       responseData(200, true, "OK", null, {
         menus,
-        imgPath: generateImgPath(req),
+        imgPath: imgHelper.generateImgPath(req),
       })
     );
   } catch (error) {
@@ -34,18 +35,16 @@ const getMenuBySlug = async (
     const menu = await Menu.findOne({ where: { slug }, raw: true });
     if (!menu) {
       return res
-        .status(200)
+        .status(404)
         .send(responseData(404, false, "Data not found", null, null));
     }
 
-    return res
-      .status(200)
-      .send(
-        responseData(200, true, "OK", null, {
-          menu,
-          imgPath: generateImgPath(req),
-        })
-      );
+    return res.status(200).send(
+      responseData(200, true, "OK", null, {
+        menu,
+        imgPath: imgHelper.generateImgPath(req),
+      })
+    );
   } catch (error) {
     if (error != null && error instanceof Error) {
       return res
@@ -64,18 +63,16 @@ const createMenu = async (req: Request, res: Response): Promise<Response> => {
     const hasMenu = await Menu.findOne({ where: { slug: data.slug } });
     if (hasMenu) {
       return res
-        .status(200)
+        .status(409)
         .send(responseData(409, false, "Menu is exits", null, null));
     }
     const menu = await Menu.create(data);
-    return res
-      .status(200)
-      .send(
-        responseData(200, true, "OK", null, {
-          menu,
-          imgPath: generateImgPath(req),
-        })
-      );
+    return res.status(200).send(
+      responseData(200, true, "OK", null, {
+        menu,
+        imgPath: imgHelper.generateImgPath(req),
+      })
+    );
   } catch (error) {
     if (error != null && error instanceof Error) {
       return res
@@ -98,7 +95,7 @@ const updateMenuById = async (
     const menu = await Menu.findByPk(id);
     if (!menu) {
       return res
-        .status(200)
+        .status(404)
         .send(responseData(404, false, "Data not found", null, null));
     }
     menu.update(data);
@@ -106,7 +103,7 @@ const updateMenuById = async (
     return res.status(200).send(
       responseData(200, true, "Updated", null, {
         menu,
-        imgPath: generateImgPath(req),
+        imgPath: imgHelper.generateImgPath(req),
       })
     );
   } catch (error) {
@@ -130,11 +127,53 @@ const deleteMenuById = async (
     const menu = await Menu.findByPk(id);
     if (!menu) {
       return res
-        .status(200)
+        .status(404)
         .send(responseData(404, false, "Data not found", null, null));
     }
     await menu.destroy();
     return res.status(200).send(responseData(200, true, "Deleted", null, null));
+  } catch (error) {
+    if (error != null && error instanceof Error) {
+      return res
+        .status(500)
+        .send(responseData(500, false, error.message, error, null));
+    }
+    return res
+      .status(500)
+      .send(responseData(500, false, "Internal server error", error, null));
+  }
+};
+
+const getMenusByIds = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  try {
+    const ids = req.query.ids as any;
+    const menus =
+      ids && ids.length > 1
+        ? await Menu.findAll({
+            raw: true,
+            where: {
+              id: {
+                [Op.in]: ids,
+              },
+            },
+          })
+        : ids && ids.length <= 1
+        ? await Menu.findAll({
+            raw: true,
+            where: {
+              id: ids,
+            },
+          })
+        : [];
+    return res.status(200).send(
+      responseData(200, true, "OK", null, {
+        menus,
+        imgPath: imgHelper.generateImgPath(req),
+      })
+    );
   } catch (error) {
     if (error != null && error instanceof Error) {
       return res
@@ -153,4 +192,5 @@ export default {
   createMenu,
   updateMenuById,
   deleteMenuById,
+  getMenusByIds,
 };

@@ -8,7 +8,7 @@ import { AuthService } from 'src/app/services/clients/auth/auth.service';
   templateUrl: './fogot-password.page.html',
   styleUrls: ['./fogot-password.page.scss', '../auth.scss'],
 })
-export class FogotPasswordPage implements OnInit {
+export class FogotPasswordPage {
   loginForm = this.formBuilder.group({
     email: ['vqduydz.learn@gmail.com', [Validators.required, Validators.email]],
   });
@@ -18,8 +18,6 @@ export class FogotPasswordPage implements OnInit {
     private router: Router,
     private auth: AuthService
   ) {}
-
-  ngOnInit() {}
 
   get f() {
     return this.loginForm.controls;

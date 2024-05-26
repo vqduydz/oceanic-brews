@@ -1,0 +1,21 @@
+<div class="header">
+  <h3 class="title">Favorites</h3>
+</div>
+<ion-content>
+  <div>
+    <div class="menus">
+      @if(menusLoaded){ @if(menus.menus.length) { @for (menu of menus.menus;
+      track $index) {
+      <app-menu-card
+        (menuCardClicked)="goToDetail(menu.slug)"
+        [menu]="menu"
+        [imgPath]="menus.imgPath"
+      ></app-menu-card>
+      } } @else {
+      <p>Không có qq gì ...</p>
+      } }@else {
+      <p>Loading...</p>
+      }
+    </div>
+  </div>
+</ion-content>

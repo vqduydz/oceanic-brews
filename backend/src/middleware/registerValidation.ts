@@ -17,6 +17,8 @@ const registerValidation = async (
       lastName,
       gender,
       phoneNumber,
+      role,
+      active,
     } = req.body;
 
     const data = {
@@ -25,8 +27,10 @@ const registerValidation = async (
       confirmPassword,
       firstName,
       lastName,
-      gender: gender || "Other",
+      gender: gender || "other",
       phoneNumber,
+      role,
+      active,
     };
 
     const rules: Validator.Rules = {
@@ -36,7 +40,9 @@ const registerValidation = async (
       firstName: "required|string|max:50",
       lastName: "required|string|max:50",
       gender: "required|string",
+      role: "required|string",
       phoneNumber: "required",
+      active,
     };
 
     const validate = new Validator(data, rules);

@@ -1,13 +1,21 @@
 import express from "express";
-import path from "path";
-import { registerValidation, resetPasswordValidation } from "../middleware";
 import {
   authController,
   categoryController,
+  imgController,
   menuController,
+  userController,
 } from "../controller";
-import Authorization from "../middleware/Authorization";
+import {
+  authenticated,
+  checkRole,
+  registerValidation,
+  resetPasswordValidation,
+} from "../middleware";
+import multer from "multer";
+
 const router = express.Router();
+const upload = multer({ storage: multer.memoryStorage() });
 
 //category
 router.get("/categories", categoryController.getCategory);
@@ -25,29 +33,52 @@ router.get("/menu/:slug", menuController.getMenuBySlug);
 router.post("/menu", menuController.createMenu);
 router.patch("/menu/:id", menuController.updateMenuById);
 router.delete("/menu/:id", menuController.deleteMenuById);
+router.get("/menuIds", menuController.getMenusByIds);
 
 //auth
 router.post("/register", registerValidation, authController.register);
-router.post("/login", authController.UserLogin);
+router.post("/login", authController.userLogin);
 router.get("/refresh-token", authController.refreshToken);
-router.get("/logout", Authorization.Authenticated, authController.UserLogout);
+router.get("/logout", authenticated, authController.userLogout);
 router.post("/fogot-password", authController.forgotPassword);
+router.get("/current-user", authenticated, authController.getCurrentUser);
 router.patch(
   "/reset-password",
-  Authorization.Authenticated,
+  authenticated,
   resetPasswordValidation,
   authController.resetPassword
 );
+router.patch("/self-update-user", authenticated, authController.selfUpdateUser);
 
 //user
-// router.get("/current-user", Authorization.Authenticated, UserController.UserDetail);
+router.get("/users", userController.getAllUsers);
+router.post(
+  "/user",
+  authenticated,
+  checkRole(["root", "admin"]),
+  userController.createUser
+);
+router.patch(
+  "/update-user",
+  authenticated,
+  checkRole(["root", "admin"]),
+  userController.UpdateUser
+);
+router.delete(
+  "/user/:id",
+  authenticated,
+  checkRole(["root", "admin"]),
+  userController.deleteUserById
+);
+// import user
+router.post(
+  "/users/import",
+  authenticated,
+  checkRole(["root", "admin"]),
+  upload.single("file"),
+  userController.importUsers
+);
 
 //image
-router.get("/images/:filename", (req, res) => {
-  // Khai báo đường dẫn tới thư mục chứa hình ảnh
-  const imagePath = path.join(__dirname, "../../uploads");
-  const { filename } = req.params;
-  const filePath = path.join(imagePath, filename);
-  res.sendFile(filePath);
-});
+router.get("/images/:name", imgController.getImage);
 export default router;

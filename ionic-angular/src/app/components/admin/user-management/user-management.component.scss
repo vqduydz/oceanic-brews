@@ -1,0 +1,14 @@
+.searchTable {
+  margin: 1rem auto;
+  ion-input {
+    text-align: right;
+  }
+}
+
+.table-container {
+  max-height: 100%;
+  overflow: scroll;
+  border: 1px solid red;
+  padding: 1rem;
+  border-radius: 6px;
+}

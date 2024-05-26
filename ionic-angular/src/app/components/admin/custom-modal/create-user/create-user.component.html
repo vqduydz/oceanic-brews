@@ -1,0 +1,119 @@
+<div [formGroup]="formGroup">
+  <ion-input
+    label="First name : "
+    placeholder="First name"
+    required
+    formControlName="firstName"
+    type="text"
+  ></ion-input>
+  <p class="ion-no-margin form-error">
+    @if ( f['firstName'].touched && f['firstName'].errors?.['required']) { First
+    name is required}
+  </p>
+
+  <ion-input
+    label="Last name : "
+    placeholder="Last name"
+    required
+    formControlName="lastName"
+    type="text"
+  ></ion-input>
+  <p class="ion-no-margin form-error">
+    @if ( f['lastName'].touched && f['lastName'].errors?.['required']) { Last
+    name is required}
+  </p>
+
+  <ion-input
+    label="Phone number : "
+    placeholder="Phone number"
+    required
+    formControlName="phoneNumber"
+    type="number"
+  ></ion-input>
+  <p class="ion-no-margin form-error">
+    @if ( f['phoneNumber'].touched && f['phoneNumber'].errors?.['required']) {
+    Phone number is required}
+  </p>
+
+  <ion-input
+    label="Email : "
+    placeholder="Email"
+    required
+    formControlName="email"
+    type="email"
+  ></ion-input>
+  <p class="ion-no-margin form-error">
+    @if ( f['email'].touched ) { @if (f['email'].errors?.['required']) { Email
+    is required } @else if (f['email'].errors?.['email']) { Email must be a
+    valid email address } }
+  </p>
+
+  <ion-input
+    label="Password : "
+    placeholder="Password"
+    required
+    formControlName="password"
+    type="password"
+  ></ion-input>
+  <p class="ion-no-margin form-error">
+    @if ( f['password'].touched && f['password'].errors?.['required']) {
+    Password is required}
+  </p>
+
+  <ion-input
+    label="Confirm password : "
+    placeholder="Confirm password"
+    required
+    formControlName="confirmPassword"
+    type="password"
+  ></ion-input>
+  <p class="ion-no-margin form-error">
+    @if ( f['confirmPassword'].touched &&
+    f['confirmPassword'].errors?.['required']) { Confirm password is required}
+    @else if (f['confirmPassword'].valid &&f['password'].value !==
+    f['confirmPassword'].value) { Confirm password does not match }
+  </p>
+
+  <ion-select
+    justify="start"
+    label="Gender : "
+    placeholder="Select gender"
+    formControlName="gender"
+  >
+    <ion-select-option value="other">Other</ion-select-option>
+    <ion-select-option value="female">Female</ion-select-option>
+    <ion-select-option value="male">Male</ion-select-option>
+  </ion-select>
+
+  <ion-select
+    justify="start"
+    label="Role : "
+    placeholder="Select role"
+    formControlName="role"
+  >
+    <ion-select-option value="admin">Admin</ion-select-option>
+    <ion-select-option value="manager">Manager</ion-select-option>
+    <ion-select-option value="deliver">Deliver</ion-select-option>
+    <ion-select-option value="customer">Customer</ion-select-option>
+  </ion-select>
+
+  <ion-select
+    justify="start"
+    label="Active status : "
+    placeholder="Select active status"
+    formControlName="active"
+  >
+    <ion-select-option [value]="true">Active</ion-select-option>
+    <ion-select-option [value]="false">Inactive</ion-select-option>
+  </ion-select>
+
+  <ion-select
+    justify="start"
+    label="Verify status : "
+    placeholder="Select verify status"
+    formControlName="verified"
+  >
+    <ion-select-option [value]="true">Verified</ion-select-option>
+    <ion-select-option [value]="false">Not verified</ion-select-option>
+  </ion-select>
+</div>

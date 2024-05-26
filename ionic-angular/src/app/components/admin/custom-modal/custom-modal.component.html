@@ -1,0 +1,58 @@
+<ion-header>
+  <ion-title> {{ modalName }} </ion-title>
+  <!-- <ion-button (click)="dismissModal()"> Close </ion-button> -->
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="currentForm">
+    @if (modalName === 'Edit User') {
+    <app-edit-user [form]="currentForm" />
+    } @if (modalName === 'Create User') {
+    <app-create-user [form]="currentForm" />
+    } @if (modalName === 'Delete User') {
+    <p style="text-align: center">
+      ⚠️ You are deleting the account associated with the email
+      <b>{{ f["email"].value }}</b>
+    </p>
+    } @if (modalName === 'Import User'){
+    <ion-item>
+      <label for="upload-file">
+        <ion-icon name="document-outline" />
+        <p>
+          @if(fileImport){
+          {{ fileImport.name }}
+          } @else { Select data file to import }
+        </p>
+      </label>
+      <input
+        id="upload-file"
+        [hidden]="true"
+        type="file"
+        accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+        (change)="handleFileChange($event)"
+      />
+    </ion-item>
+    }
+  </form>
+
+  <div style="display: flex; padding: 0.5rem">
+    <ion-button class="cancle" color="light" block (click)="cancle()">
+      cancle
+    </ion-button>
+    <ion-button
+      block
+      (click)="submit()"
+      [disabled]="
+        modalName === 'Create User'
+          ? !currentForm.valid || f.password.value !== f.confirmPassword.value
+          : modalName === 'Edit User'
+          ? !currentForm.valid || !hasChange
+          : modalName === 'Import User'
+          ? !fileImport
+          : false
+      "
+    >
+      submit
+    </ion-button>
+  </div>
+</ion-content>

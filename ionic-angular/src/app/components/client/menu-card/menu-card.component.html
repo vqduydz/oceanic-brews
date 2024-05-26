@@ -1,0 +1,11 @@
+<div class="card">
+  <div (click)="menuCardClicked.emit()">
+    <app-image [css]="ImageCss" [imgUrl]="imgPath + menu.imgUrl" />
+    <div class="card-content">
+      <h3 class="ion-no-margin title">{{ menu.name }}</h3>
+      <h2 class="ion-no-margin subtitle">
+        {{ menu.price | number }}<span>vnđ</span>
+      </h2>
+    </div>
+  </div>
+</div>

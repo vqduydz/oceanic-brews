@@ -1,25 +1,28 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { canActivate } from './utils/routeGuard';
+import { canActivate } from './services/routeGuard';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '',
+    redirectTo: 'home',
     pathMatch: 'full',
   },
   {
     path: 'manage',
+    canActivate: [canActivate],
     loadChildren: () =>
-      import('./pages/admin/manage/manage.module').then(
-        (m) => m.ManagePageModule
+      import('./pages/main-manage/main-manage.module').then(
+        (m) => m.MainManagePageModule
       ),
   },
   {
     path: '',
     canActivate: [canActivate],
     loadChildren: () =>
-      import('./pages/clients/main/main.module').then((m) => m.MainPageModule),
+      import('./pages/main-client/main-client.module').then(
+        (m) => m.MainClientPageModule
+      ),
   },
   {
     path: 'notifications',
@@ -62,6 +65,20 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/clients/reset-password/reset-password.module').then(
         (m) => m.ResetPasswordPageModule
+      ),
+  },
+  {
+    path: 'account-setting',
+    loadChildren: () =>
+      import('./pages/clients/account-setting/account-setting.module').then(
+        (m) => m.AccountSettingPageModule
+      ),
+  },
+  {
+    path: 'main-client',
+    loadChildren: () =>
+      import('./pages/main-client/main-client.module').then(
+        (m) => m.MainClientPageModule
       ),
   },
 ];

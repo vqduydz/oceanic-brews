@@ -1,0 +1,30 @@
+project-name/
+│
+├── src/
+│   ├── app/
+│   │   ├── components/          # Thư mục chứa các thành phần (components)
+│   │   ├── services/            # Thư mục chứa các dịch vụ (services)
+│   │   ├── pages/               # Thư mục chứa các trang (pages)
+│   │   ├── shared/              # Thư mục chứa các thành phần và dịch vụ chia sẻ (shared components & services)
+│   │   ├── models/              # Thư mục chứa các mô hình dữ liệu (data models)
+│   │   ├── guards/              # Thư mục chứa các guards (route guards)
+│   │   ├── interceptors/        # Thư mục chứa các interceptors (HTTP interceptors)
+│   │   ├── pipes/               # Thư mục chứa các pipes (custom pipes)
+│   │   ├── directives/          # Thư mục chứa các directives (custom directives)
+│   │   ├── assets/              # Thư mục chứa các tài nguyên tĩnh như hình ảnh, biểu tượng, v.v.
+│   │   ├── environments/        # Thư mục chứa các cấu hình môi trường (environment configurations)
+│   │   ├── app-routing.module.ts# Module định nghĩa các route cho ứng dụng
+│   │   ├── app.module.ts        # Module chính của ứng dụng
+│   │   ├── main.ts              # File khởi động ứng dụng
+│   │   └── ...
+│   │
+│   ├── assets/                  # Thư mục chứa các tài nguyên như hình ảnh, biểu tượng, v.v.
+│   ├── environments/            # Thư mục chứa các cấu hình môi trường (environment configurations)
+│   └── ...
+│
+├── node_modules/                # Thư mục chứa các modules node.js đã cài đặt
+├── www/                         # Thư mục chứa các tệp được xây dựng và tải lên cho ứng dụng web
+├── package.json                 # File cấu hình npm
+├── angular.json                 # File cấu hình dự án Angular
+├── tsconfig.json                # File cấu hình TypeScript
+└── ...

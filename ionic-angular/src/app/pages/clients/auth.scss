@@ -3,7 +3,7 @@
   min-height: 100vh;
   display: flex;
   justify-content: center;
-  background-image: url("https://colorlib.com/etc/lf/Login_v3/images/bg-01.jpg");
+  background-image: url("../../../assets/images/bg-01.jpg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -50,6 +50,7 @@ form {
     color: #ff0000;
     height: 14px;
   }
+  ion-select,
   ion-input {
     border-bottom: 1px solid #3880ff;
   }

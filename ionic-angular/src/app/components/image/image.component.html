@@ -1,0 +1,5 @@
+@if (url) {
+<ion-img [ngStyle]="css" [src]="url" [alt]="desc || ''" />
+}@else {
+<ion-img [ngStyle]="css" src="assets/images/update.png" [alt]="desc || ''" />
+}

@@ -7,7 +7,9 @@ import { IonicModule } from '@ionic/angular';
 import { MenuPageRoutingModule } from './menu-routing.module';
 
 import { MenuPage } from './menu.page';
-import { RatingModule } from 'src/app/components/rating/rating.module';
+import { RatingModule } from 'src/app/components/client/rating/rating.module';
+import { MenuCardModule } from 'src/app/components/client/menu-card/menu-card.module';
+import { ImageModule } from 'src/app/components/image/image.module';
 
 @NgModule({
   imports: [
@@ -16,6 +18,8 @@ import { RatingModule } from 'src/app/components/rating/rating.module';
     IonicModule,
     MenuPageRoutingModule,
     RatingModule,
+    MenuCardModule,
+    ImageModule,
   ],
   declarations: [MenuPage],
 })

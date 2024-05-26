@@ -6,8 +6,8 @@ import { ManagePage } from './manage.page';
 const routes: Routes = [
   {
     path: '',
-    component: ManagePage
-  }
+    component: ManagePage,
+  },
 ];
 
 @NgModule({

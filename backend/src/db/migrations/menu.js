@@ -9,42 +9,16 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      name: {
-        unique: true,
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      imgUrl: {
-        type: Sequelize.STRING,
-      },
-      slug: {
-        unique: true,
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      categoryId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-      },
-      price: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-      },
-      desc: {
-        type: Sequelize.TEXT,
-      },
-      active: {
-        allowNull: false,
-        type: Sequelize.BOOLEAN,
-      },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE,
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE,
-      },
+      name: { unique: true, type: Sequelize.STRING, allowNull: false },
+      imgUrl: { type: Sequelize.STRING },
+      slug: { unique: true, type: Sequelize.STRING, allowNull: false },
+      categoryId: { type: Sequelize.INTEGER, allowNull: false },
+      price: { allowNull: false, type: Sequelize.INTEGER },
+      desc: { type: Sequelize.TEXT },
+      favoriteBy: { type: Sequelize.TEXT },
+      active: { allowNull: false, type: Sequelize.BOOLEAN },
+      createdAt: { allowNull: false, type: Sequelize.DATE },
+      updatedAt: { allowNull: false, type: Sequelize.DATE },
     });
   },
   async down(queryInterface, Sequelize) {

@@ -1,0 +1,6 @@
+<div [ngStyle]="containerCss">
+  @if (src) {
+  <img [ngStyle]="avatarCss" [src]="src" />
+  }
+  <div [ngStyle]="avatarCss" #avatar></div>
+</div>

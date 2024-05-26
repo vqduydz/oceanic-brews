@@ -1,5 +1,32 @@
-<ion-content class="container"
-  ><div class="content">
-    <ion-button (click)="logout()" shape="round"> Logout </ion-button>
-  </div></ion-content
->
+@if (currentUser) {
+<ion-content>
+  <div class="avatar">
+    <app-avatar
+      [imgUrl]="imgPath +currentUser.avatar"
+      [name]="currentUser.firstName + ' ' +currentUser.lastName"
+    />
+    <div>
+      <h3>{{currentUser.firstName + ' ' + currentUser.lastName }}</h3>
+      <i>
+        @if (currentUser.verified) { Verified ✅ } @else { Not verified ⚠️ }
+      </i>
+    </div>
+  </div>
+  <div class="body">
+    @for (item of profileItems; track $index;let isFirst =$first) {
+    <div class="item">
+      <app-profile-item
+        [icon1]="item.icon1"
+        [icon2]="item.icon2"
+        [title]="item.title"
+        (profileItemClicked)="goToPage(item.page)"
+      />
+    </div>
+    }
+    <button (click)="onClick()" width="100px" height="50px">Click me</button>
+  </div>
+  <ion-button (click)="logout()"> Logout </ion-button>
+</ion-content>
+}@else {
+<p>Loading .....</p>
+}

@@ -40,6 +40,7 @@
 
 * {
   font-family: Gilroy;
+  user-select: none;
 }
 
 html {
@@ -66,3 +67,128 @@ app-rating {
 p {
   margin: 0.5rem 0;
 }
+
+/////////////////////table
+.ngx-datatable.material {
+  box-shadow: none !important;
+}
+
+.ngx-datatable.fixed-header
+  .datatable-header
+  .datatable-header-inner
+  .datatable-header-cell {
+  justify-content: center;
+  background-color: #3880ff !important;
+  color: white !important;
+  font-weight: bold;
+  padding: 5px !important;
+  text-align: center !important;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  // font-size: 1rem;
+  &.name {
+    justify-content: left;
+  }
+}
+
+.cell-class {
+  padding: 5px !important;
+  border-bottom: 1px solid #ddd;
+  text-align: center !important;
+
+  &.name {
+    text-align: left !important;
+  }
+}
+
+.cell-class ion-button {
+  font-size: 0.7rem;
+  & + .cell-class ion-button {
+    margin-left: 5px;
+  }
+}
+
+.ngx-datatable
+  .datatable-header
+  .datatable-header-cell
+  .datatable-header-cell-template-wrap {
+  display: flex;
+  align-items: center;
+  // font-size: 0.6rem;
+}
+
+.ngx-datatable.material
+  .datatable-body
+  .datatable-body-row
+  .datatable-body-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-wrap: wrap !important;
+  word-wrap: break-all !important;
+  &.name {
+    justify-content: left;
+  }
+}
+
+datatable-scroller {
+  width: auto !important;
+}
+
+div.datatable-body-cell-label {
+  text-wrap: wrap !important;
+  word-break: break-all !important;
+}
+
+.select-wrapper {
+  justify-content: left;
+}
+
+// modal
+
+// .custom-modal {
+//   --border-radius: 0;
+// }
+
+// ion-modal > .ion-page {
+//   display: block;
+//   overflow: auto;
+// }
+
+// .custom-modal {
+//   align-items: center;
+//   justify-content: center;
+// }
+
+@media only screen and (min-width: 768px) {
+  //modal
+  .custom-modal {
+    --border-radius: 6px;
+    --max-width: 500px;
+    --max-height: 100%;
+    &.create-user {
+      --height: 720px;
+    }
+    &.edit-user {
+      --height: 550px;
+    }
+    &.delete-user,
+    &.import-user {
+      --max-height: 200px;
+      --max-width: 400px;
+    }
+  }
+  .ion-page {
+    display: flex;
+  }
+
+  //.toast
+
+  .custom-toast {
+    --min-width: 100px;
+    --max-width: 400px;
+    color: #fff !important;
+  }
+}
+// [class^="delete-"]

@@ -14,16 +14,16 @@ ion-content {
 
   .title {
     font-weight: 700;
-    color: #555;
+    color: #666;
   }
   .categories {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-gap: 1rem;
+    grid-gap: 0.5rem;
   }
   .menus {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-gap: 0.5rem;
+    grid-gap: 0.3rem;
   }
 }

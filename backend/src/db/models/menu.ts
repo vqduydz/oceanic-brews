@@ -14,6 +14,7 @@ class Menu extends Model<MenuAttributes, MenuInput> implements MenuAttributes {
   public categoryId!: number;
   public price!: number;
   public desc!: string;
+  public favoriteBy!: string;
   public active!: boolean;
 
   public readonly createdAt!: Date;
@@ -26,36 +27,16 @@ Menu.init(
       primaryKey: true,
       autoIncrement: true,
       allowNull: false,
-      type: DataTypes.BIGINT,
+      type: DataTypes.INTEGER,
     },
-    name: {
-      unique: true,
-      allowNull: false,
-      type: DataTypes.STRING,
-    },
-    slug: {
-      unique: true,
-      allowNull: false,
-      type: DataTypes.STRING,
-    },
-    imgUrl: {
-      type: DataTypes.STRING,
-    },
-    categoryId: {
-      allowNull: false,
-      type: DataTypes.STRING,
-    },
-    price: {
-      allowNull: false,
-      type: DataTypes.STRING,
-    },
-    desc: {
-      type: DataTypes.STRING,
-    },
-    active: {
-      allowNull: false,
-      type: DataTypes.BOOLEAN,
-    },
+    name: { unique: true, allowNull: false, type: DataTypes.STRING },
+    slug: { unique: true, allowNull: false, type: DataTypes.STRING },
+    imgUrl: { type: DataTypes.STRING },
+    categoryId: { allowNull: false, type: DataTypes.STRING },
+    price: { allowNull: false, type: DataTypes.STRING },
+    desc: { type: DataTypes.STRING },
+    favoriteBy: { type: DataTypes.STRING },
+    active: { allowNull: false, type: DataTypes.BOOLEAN },
   },
   { timestamps: true, sequelize: connection, underscored: false }
 );

@@ -9,6 +9,7 @@ interface UserData {
   email: string | null;
   verified: boolean | null;
   active: boolean | null;
+  role: string;
 }
 
 const generateToken = (data: any, expiresIn?: string | number): string => {

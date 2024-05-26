@@ -50,3 +50,25 @@ export interface ResMenus {
   menus: Menu[];
   imgPath: string;
 }
+
+export interface CurrentUser {
+  id?: number;
+  email?: string;
+  firstName?: string;
+  lastName?: string;
+  phoneNumber?: number;
+  gender?: string;
+  avatar?: string;
+  places?: string;
+  active?: boolean;
+  verified?: boolean;
+  birthday?: Date;
+  favorites?: string;
+  role?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+export interface ResCurrentUser {
+  user: CurrentUser;
+  imgPath: string;
+}

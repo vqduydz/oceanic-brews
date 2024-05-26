@@ -6,7 +6,7 @@ import {
   Menu,
   MenuAttributes,
 } from "../db/models";
-import { generateImgPath, responseData } from "../utils";
+import { imgHelper, responseData } from "../utils";
 
 const getCategory = async (req: Request, res: Response): Promise<Response> => {
   try {
@@ -14,7 +14,7 @@ const getCategory = async (req: Request, res: Response): Promise<Response> => {
     return res.status(200).send(
       responseData(200, true, "OK", null, {
         categories,
-        imgPath: generateImgPath(req),
+        imgPath: imgHelper.generateImgPath(req),
       })
     );
   } catch (error) {
@@ -45,7 +45,7 @@ const getCategoryById = async (
     return res.status(200).send(
       responseData(200, true, "OK", null, {
         category,
-        imgPath: generateImgPath(req),
+        imgPath: imgHelper.generateImgPath(req),
       })
     );
   } catch (error) {
@@ -81,7 +81,7 @@ const getCategoryWithMenu = async (
       responseData(200, true, "OK", null, {
         categories,
         pagination: { currentPage, perPage, totalCount, totalPages },
-        imgPath: generateImgPath(req),
+        imgPath: imgHelper.generateImgPath(req),
       })
     );
   } catch (error) {
@@ -112,7 +112,7 @@ const getAllCategoryWithMenu = async (
     return res.status(200).send(
       responseData(200, true, "OK", null, {
         categories,
-        imgPath: generateImgPath(req),
+        imgPath: imgHelper.generateImgPath(req),
       })
     );
   } catch (error) {
@@ -133,19 +133,20 @@ const getAllCategoryWithMenuById = async (
 ): Promise<Response> => {
   try {
     const { id } = req.params;
+
     const category = await Category.findOne({
       where: { id },
       include: { model: Menu, as: "menus" },
     });
     if (!category) {
       return res
-        .status(200)
+        .status(404)
         .send(responseData(404, false, "Data not found", null, null));
     }
     return res.status(200).send(
       responseData(200, true, "OK", null, {
         category,
-        imgPath: generateImgPath(req),
+        imgPath: imgHelper.generateImgPath(req),
       })
     );
   } catch (error) {
@@ -176,7 +177,7 @@ const createCategory = async (
     return res.status(200).send(
       responseData(200, true, "OK", null, {
         category,
-        imgPath: generateImgPath(req),
+        imgPath: imgHelper.generateImgPath(req),
       })
     );
   } catch (error) {
@@ -209,7 +210,7 @@ const updateCategoryById = async (
     return res.status(200).send(
       responseData(200, true, "Updated", null, {
         category,
-        imgPath: generateImgPath(req),
+        imgPath: imgHelper.generateImgPath(req),
       })
     );
   } catch (error) {

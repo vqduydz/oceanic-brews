@@ -1,13 +1,28 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>manage</ion-title>
+    <div style="display: flex; justify-content: space-between">
+      <div style="display: flex">
+        <ion-buttons slot="start">
+          <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>{{ headerTitle }}</ion-title>
+      </div>
+      <div style="display: flex">
+        <ion-button color="primary" (click)="presentModal({action:'import'})">
+          import
+        </ion-button>
+        <ion-button color="success" (click)="presentModal({action:'create'})">
+          Create
+        </ion-button>
+      </div>
+    </div>
   </ion-toolbar>
 </ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">manage</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  @if(currentShow==='user'){
+  <app-user-management
+    (userEditing)="presentModal($event)"
+    (userDeleting)="presentModal($event)"
+  />
+  }
 </ion-content>

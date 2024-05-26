@@ -9,31 +9,12 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      name: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true,
-      },
-      slug: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true,
-      },
-      imgUrl: {
-        type: Sequelize.STRING,
-      },
-      active: {
-        allowNull: false,
-        type: Sequelize.BOOLEAN,
-      },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE,
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE,
-      },
+      name: { type: Sequelize.STRING, allowNull: false, unique: true },
+      slug: { type: Sequelize.STRING, allowNull: false, unique: true },
+      imgUrl: { type: Sequelize.STRING },
+      active: { allowNull: false, type: Sequelize.BOOLEAN },
+      createdAt: { allowNull: false, type: Sequelize.DATE },
+      updatedAt: { allowNull: false, type: Sequelize.DATE },
     });
   },
   async down(queryInterface, Sequelize) {

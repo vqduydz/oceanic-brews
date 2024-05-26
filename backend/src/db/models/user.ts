@@ -12,14 +12,15 @@ class User extends Model<UserAttributes, UserInput> implements UserAttributes {
   public password!: string;
   public firstName!: string;
   public lastName!: string;
-  public phoneNumber!: number;
+  public phoneNumber!: string;
   public gender!: string;
   public avatar!: string;
   public places!: string;
+  public role!: string;
   public active!: boolean;
   public verified!: boolean;
   public birthday!: Date;
-  public accessToken!: string;
+  public favorites!: string;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -33,52 +34,19 @@ User.init(
       allowNull: false,
       type: DataTypes.INTEGER,
     },
-    email: {
-      unique: true,
-      allowNull: false,
-      type: DataTypes.STRING,
-    },
-    password: {
-      allowNull: false,
-      type: DataTypes.STRING,
-    },
-
-    firstName: {
-      allowNull: false,
-      type: DataTypes.STRING,
-    },
-    lastName: {
-      allowNull: false,
-      type: DataTypes.STRING,
-    },
-    phoneNumber: {
-      allowNull: false,
-      type: DataTypes.INTEGER,
-    },
-    gender: {
-      allowNull: false,
-      type: DataTypes.STRING,
-    },
-    avatar: {
-      type: DataTypes.STRING,
-    },
-    places: {
-      type: DataTypes.TEXT,
-    },
-    active: {
-      allowNull: false,
-      type: DataTypes.BOOLEAN,
-    },
-    verified: {
-      allowNull: false,
-      type: DataTypes.BOOLEAN,
-    },
-    birthday: {
-      type: DataTypes.DATE,
-    },
-    accessToken: {
-      type: DataTypes.TEXT,
-    },
+    email: { unique: true, allowNull: false, type: DataTypes.STRING },
+    password: { allowNull: false, type: DataTypes.STRING },
+    firstName: { allowNull: false, type: DataTypes.STRING },
+    lastName: { allowNull: false, type: DataTypes.STRING },
+    phoneNumber: { allowNull: false, type: DataTypes.STRING },
+    gender: { allowNull: false, type: DataTypes.STRING },
+    avatar: { type: DataTypes.STRING },
+    role: { type: DataTypes.STRING },
+    places: { type: DataTypes.TEXT },
+    active: { allowNull: false, type: DataTypes.BOOLEAN },
+    verified: { allowNull: false, type: DataTypes.BOOLEAN },
+    favorites: { type: DataTypes.TEXT },
+    birthday: { type: DataTypes.DATE },
   },
   { timestamps: true, sequelize: connection, underscored: false }
 );

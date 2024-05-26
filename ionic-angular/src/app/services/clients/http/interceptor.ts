@@ -7,18 +7,30 @@ import {
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { Observable, of, throwError } from 'rxjs';
+import { catchError, map, switchMap } from 'rxjs/operators';
+import { AuthService } from '../auth/auth.service';
+
+const requiresAuth = (url: string): boolean => {
+  return !(
+    url.includes('/login') ||
+    url.includes('/register') ||
+    url.includes('/fogot-password') ||
+    url.includes('/reset-password') ||
+    url.includes('/refresh-token') ||
+    url.includes('/categories') ||
+    url.includes('/menu')
+  );
+};
 
 @Injectable()
-export class AuthInterceptor implements HttpInterceptor {
+export class RequestInterceptor implements HttpInterceptor {
   constructor(private router: Router) {}
-
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    if (this.requiresAuth(request.url)) {
+    if (requiresAuth(request.url)) {
       const accessToken = this.getAccessToken();
       if (accessToken) {
         request = request.clone({
@@ -26,34 +38,31 @@ export class AuthInterceptor implements HttpInterceptor {
             Authorization: `Bearer ${accessToken}`,
           },
         });
+        return next.handle(request);
       } else {
-        console.error('Access token is missing');
         this.router.navigate(['/login']);
+        return throwError({ error: { message: 'Access token is missing' } });
       }
+    } else {
+      return next.handle(request);
     }
-    return next.handle(request);
   }
-
-  private requiresAuth(url: string): boolean {
-    return !(
-      url.includes('/login') ||
-      url.includes('/register') ||
-      url.includes('/fogot-password') ||
-      url.includes('/reset-password') ||
-      url.includes('/refresh-token')
-    );
-  }
-
   private getAccessToken(): string | null {
     const accessToken = localStorage.getItem('access-token');
     return accessToken;
   }
 }
 
+@Injectable()
 export class ResponseInterceptor implements HttpInterceptor {
-  constructor() {}
-
+  constructor(private router: Router, private authService: AuthService) {}
   intercept(
+    request: HttpRequest<any>,
+    next: HttpHandler
+  ): Observable<HttpEvent<any>> {
+    return this.sendRequest(request, next);
+  }
+  sendRequest(
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
@@ -62,14 +71,28 @@ export class ResponseInterceptor implements HttpInterceptor {
         return event;
       }),
       catchError((error: HttpErrorResponse) => {
-        const errorData = this.handleError(error);
-        return throwError(errorData);
+        if (error.status !== 401 || !requiresAuth(request.url)) {
+          return throwError(error);
+        } else
+          return this.authService.refreshToken().pipe(
+            catchError((refreshError: HttpErrorResponse) => {
+              this.router.navigate(['/login']);
+              return throwError(refreshError);
+            }),
+            switchMap((data: any) => {
+              this.authService.setItemToLocalStorage(
+                'access-token',
+                data.data.accessToken
+              );
+              const newRequest = request.clone({
+                setHeaders: {
+                  Authorization: `Bearer ${data.data.accessToken}`,
+                },
+              });
+              return this.sendRequest(newRequest, next);
+            })
+          );
       })
     );
-  }
-
-  private handleError(error: HttpErrorResponse): any {
-    const errorData = error.error;
-    return errorData;
   }
 }

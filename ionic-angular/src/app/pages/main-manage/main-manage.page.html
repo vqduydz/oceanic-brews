@@ -1,0 +1,62 @@
+@if(currentUser) {<ion-app>
+  <ion-split-pane when="(min-width: 1020px)" contentId="manage-content">
+    <ion-menu contentId="manage-content" type="overlay">
+      <ion-content>
+        <div class="header">
+          <app-avatar
+            [imgUrl]="imgPath+currentUser.avatar"
+            [name]="currentUser.firstName + ' '+ currentUser.lastName"
+          />
+          <p>
+            {{currentUser.role}} : {{currentUser.firstName +'
+            '+currentUser.lastName}}
+          </p>
+        </div>
+        <ion-list id="inbox-list">
+          <ion-menu-toggle auto-hide="false">
+            @for (p of managePages; track $index) { @if (p.url!==null) {
+            <ion-item
+              routerDirection="root"
+              [routerLink]="[p.url]"
+              lines="none"
+              detail="false"
+              routerLinkActive="selected"
+            >
+              <ion-icon
+                aria-hidden="true"
+                slot="start"
+                [ios]="p.icon + '-outline'"
+                [md]="p.icon + '-sharp'"
+              ></ion-icon>
+              <ion-label>{{ p.title }}</ion-label>
+            </ion-item>
+            }@else {
+
+            <div class="space"></div>
+            <ion-item
+              (click)="logout()"
+              class="logout"
+              lines="none"
+              detail="false"
+              routerLinkActive="selected"
+            >
+              <ion-icon
+                class="logout-icon"
+                aria-hidden="true"
+                slot="start"
+                [ios]="p.icon + '-outline'"
+                [md]="p.icon + '-sharp'"
+              ></ion-icon>
+              <ion-label>{{ p.title }}</ion-label>
+            </ion-item>
+            } }
+          </ion-menu-toggle>
+        </ion-list>
+      </ion-content>
+    </ion-menu>
+    <ion-router-outlet id="manage-content"></ion-router-outlet>
+  </ion-split-pane>
+</ion-app>
+}@else {
+<p>loading</p>
+}

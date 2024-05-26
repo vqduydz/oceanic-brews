@@ -1,0 +1,149 @@
+@if(loading){
+<p>loading...</p>
+
+} @else {
+<div class="searchTable">
+  <ion-input
+    type="text"
+    class="ion-text-center"
+    placeholder="🔍 Type to filter the email column..."
+    (ionInput)="updateFilter($event)"
+  ></ion-input>
+</div>
+<ngx-datatable
+  #table
+  class="material"
+  [columnMode]="ColumnMode.force"
+  [headerHeight]="50"
+  [footerHeight]="50"
+  rowHeight="auto"
+  [limit]="10"
+  [rows]="rows"
+>
+  <ngx-datatable-column
+    [canAutoResize]="false"
+    name="No."
+    headerClass="header-class"
+    cellClass="cell-class"
+    [width]="50"
+    [sortable]="false"
+  >
+    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex">
+      {{ rowIndex + 1 }}
+    </ng-template>
+  </ngx-datatable-column>
+
+  <ngx-datatable-column
+    name="First name"
+    headerClass="header-class name"
+    cellClass="cell-class name"
+    [width]="80"
+    [canAutoResize]="false"
+  >
+    <ng-template ngx-datatable-cell-template let-row="row">
+      {{ row.firstName }}
+    </ng-template>
+  </ngx-datatable-column>
+
+  <ngx-datatable-column
+    name="Last name"
+    headerClass="header-class name"
+    cellClass="cell-class name"
+    [width]="80"
+    [canAutoResize]="false"
+  >
+    <ng-template ngx-datatable-cell-template let-row="row">
+      {{ row.lastName }}
+    </ng-template>
+  </ngx-datatable-column>
+
+  <ngx-datatable-column
+    name="Email"
+    headerClass="header-class email"
+    cellClass="cell-class email"
+  >
+    <ng-template ngx-datatable-cell-template let-row="row">
+      {{ row.email }}
+    </ng-template>
+  </ngx-datatable-column>
+
+  <ngx-datatable-column
+    name="Role"
+    headerClass="header-class"
+    cellClass="cell-class"
+    [width]="80"
+    [canAutoResize]="false"
+  >
+    <ng-template ngx-datatable-cell-template let-row="row">
+      {{ row.role }}
+    </ng-template>
+  </ngx-datatable-column>
+
+  <ngx-datatable-column
+    name="Active"
+    headerClass="header-class"
+    cellClass="cell-class"
+    [canAutoResize]="false"
+    [width]="70"
+  >
+    <ng-template ngx-datatable-cell-template let-row="row">
+      {{ row.active ? "✅" : "❌" }}
+    </ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-column
+    name="Verified"
+    headerClass="header-class"
+    cellClass="cell-class"
+    [canAutoResize]="false"
+    [width]="70"
+  >
+    <ng-template ngx-datatable-cell-template let-row="row">
+      {{ row.verified ? "✅" : "❌" }}
+    </ng-template>
+  </ngx-datatable-column>
+
+  <ngx-datatable-column
+    name="Phone Number"
+    headerClass="header-class"
+    cellClass="cell-class"
+    [maxWidth]="110"
+    [minWidth]="100"
+  >
+    <ng-template ngx-datatable-cell-template let-row="row">
+      {{ row.phoneNumber }}
+    </ng-template>
+  </ngx-datatable-column>
+
+  <ngx-datatable-column
+    name="Actions"
+    [sortable]="false"
+    [canAutoResize]="false"
+    [width]="110"
+    headerClass="header-class"
+    cellClass="cell-class"
+  >
+    <ng-template ngx-datatable-cell-template let-row="row">
+      <ion-button
+        [disabled]="
+          currentUser.active === false ||
+          currentUser.verified === false ||
+          row.role === 'root' ||
+          (currentUser.role === 'admin' &&
+            row.role === 'admin' &&
+            row.id !== currentUser.id)
+        "
+        color="warning"
+        (click)="userEditing.emit({ action: 'edit', currentData: row })"
+        ><ion-icon name="pencil-outline"></ion-icon
+      ></ion-button>
+      <ion-button
+        [disabled]="row.role === 'root'"
+        color="danger"
+        (click)="userDeleting.emit({ action: 'delete', currentData: row })"
+        ><ion-icon name="trash-outline"></ion-icon
+      ></ion-button>
+    </ng-template>
+  </ngx-datatable-column>
+</ngx-datatable>
+
+}
