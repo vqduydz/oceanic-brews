@@ -1,26 +1,156 @@
 <ion-header>
   <ion-title> {{ modalName }} </ion-title>
-  <!-- <ion-button (click)="dismissModal()"> Close </ion-button> -->
 </ion-header>
 
 <ion-content>
   <form [formGroup]="currentForm">
+    <!-- user -->
     @if (modalName === 'Edit User') {
     <app-edit-user [form]="currentForm" />
     } @if (modalName === 'Create User') {
     <app-create-user [form]="currentForm" />
     } @if (modalName === 'Delete User') {
     <p style="text-align: center">
-      ⚠️ You are deleting the account associated with the email
+      ⚠️ You are deleting the account (email)
+      <br />
       <b>{{ f["email"].value }}</b>
     </p>
-    } @if (modalName === 'Import User'){
+    }
+    <!-- category -->
+    @if (modalName === 'Create Category'||modalName === 'Edit Category') {
+    <ion-input
+      label="Name : "
+      placeholder="Name"
+      required
+      formControlName="name"
+      type="text"
+    ></ion-input>
+    <p class="ion-no-margin form-error">
+      @if ( f['name'].touched && f['name'].errors?.['required']) { Last name is
+      required}
+    </p>
+
+    <ion-select
+      justify="start"
+      label="Active status : "
+      placeholder="Select active status"
+      formControlName="active"
+    >
+      <ion-select-option [value]="true">Active</ion-select-option>
+      <ion-select-option [value]="false">Inactive</ion-select-option>
+    </ion-select>
+
     <ion-item>
       <label for="upload-file">
         <ion-icon name="document-outline" />
         <p>
-          @if(fileImport){
-          {{ fileImport.name }}
+          @if(file){
+          {{ file.name }}
+          } @else { Select image}
+        </p>
+      </label>
+      <input
+        id="upload-file"
+        [hidden]="true"
+        type="file"
+        accept="image/*"
+        (change)="handleFileChange($event)"
+      />
+    </ion-item>
+    } @if (modalName === 'Delete Category') {
+    <p style="text-align: center">
+      ⚠️ You are deleting the category
+      <br />
+      <b>{{ f["name"].value }}</b>
+    </p>
+    }
+
+    <!-- menu -->
+    @if (modalName === 'Create Menu'||modalName === 'Edit Menu') {
+    <ion-input
+      label="Name : "
+      placeholder="Name"
+      required
+      formControlName="name"
+      type="text"
+    ></ion-input>
+    <p class="ion-no-margin form-error">
+      @if ( f['name'].touched && f['name'].errors?.['required']) { Last name is
+      required}
+    </p>
+
+    <ion-input
+      label="Price : "
+      placeholder="Price"
+      required
+      formControlName="price"
+      type="number"
+    ></ion-input>
+    <p class="ion-no-margin form-error">
+      @if ( f['price'].touched && f['price'].errors?.['required']) { Price is
+      required}
+    </p>
+
+    <ion-select
+      justify="start"
+      label="Category : "
+      placeholder="Select category"
+      formControlName="categoryId"
+    >
+      @for (category of categories; track $index) {
+      <ion-select-option [value]="category.id">{{
+        category.name
+      }}</ion-select-option>
+      }
+    </ion-select>
+    <p class="ion-no-margin form-error">
+      @if ( f['categoryId'].touched && f['categoryId'].errors?.['required']) {
+      Category is required}
+    </p>
+
+    <ion-select
+      justify="start"
+      label="Active status : "
+      placeholder="Select active status"
+      formControlName="active"
+    >
+      <ion-select-option [value]="true">Active</ion-select-option>
+      <ion-select-option [value]="false">Inactive</ion-select-option>
+    </ion-select>
+
+    <ion-item>
+      <label for="upload-file">
+        <ion-icon name="document-outline" />
+        <p>
+          @if(file){
+          {{ file.name }}
+          } @else { Select image}
+        </p>
+      </label>
+      <input
+        id="upload-file"
+        [hidden]="true"
+        type="file"
+        accept="image/*"
+        (change)="handleFileChange($event)"
+      />
+    </ion-item>
+    } @if (modalName === 'Delete Menu') {
+    <p style="text-align: center">
+      ⚠️ You are deleting the menu
+      <br />
+      <b>{{ f["name"].value }}</b>
+    </p>
+    }
+
+    <!-- Import -->
+    @if (modalName.includes('Import')){
+    <ion-item>
+      <label for="upload-file">
+        <ion-icon name="document-outline" />
+        <p>
+          @if(file){
+          {{ file.name }}
           } @else { Select data file to import }
         </p>
       </label>
@@ -47,8 +177,14 @@
           ? !currentForm.valid || f.password.value !== f.confirmPassword.value
           : modalName === 'Edit User'
           ? !currentForm.valid || !hasChange
-          : modalName === 'Import User'
-          ? !fileImport
+          : modalName.includes('Import') || modalName === 'Create Category'
+          ? !file
+          : modalName === 'Edit Category'
+          ? !currentForm.valid || editCondition
+          : modalName === 'Create Menu'
+          ? !currentForm.valid || !file
+          : modalName === 'Edit Menu'
+          ? !currentForm.valid || editCondition
           : false
       "
     >

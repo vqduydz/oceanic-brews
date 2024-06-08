@@ -2,8 +2,8 @@ const responseData = (
   status: number,
   ok: boolean,
   message: string | null,
-  error: any | null,
-  data: any | null
+  error?: any | null,
+  data?: any | null
 ) => {
   if (error != null && error instanceof Error) {
     const response = {

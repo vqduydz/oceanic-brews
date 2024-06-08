@@ -1,11 +1,12 @@
 import { Request, Response } from "express";
-import { User, UserAttributes } from "../db/models";
 import { imgHelper, passwordHandling, responseData } from "../utils";
 import { literal, Op } from "sequelize";
 import * as xlsx from "xlsx";
 import * as fs from "fs";
+import { UserAttributes } from "../interface";
+import { User } from "../db/models";
 
-const getAllUsers = async (req: Request, res: Response): Promise<Response> => {
+const getUsers = async (req: Request, res: Response): Promise<Response> => {
   try {
     const users = await User.findAll({
       raw: true,
@@ -42,37 +43,37 @@ const getAllUsers = async (req: Request, res: Response): Promise<Response> => {
   }
 };
 
-const getUsers = async (req: Request, res: Response): Promise<Response> => {
-  try {
-    const currentPage = (req.body?.currentPage as unknown as number) || 1;
-    const perPage = (req.body?.perPage as unknown as number) || 1;
+// const getUsers = async (req: Request, res: Response): Promise<Response> => {
+//   try {
+//     const currentPage = (req.body?.currentPage as unknown as number) || 1;
+//     const perPage = (req.body?.perPage as unknown as number) || 1;
 
-    const users = await User.findAll({
-      offset: (currentPage - 1) * perPage,
-      limit: perPage,
-    });
+//     const users = await User.findAll({
+//       offset: (currentPage - 1) * perPage,
+//       limit: perPage,
+//     });
 
-    const totalCount = await User.count();
-    const totalPages = Math.ceil(totalCount / perPage);
+//     const totalCount = await User.count();
+//     const totalPages = Math.ceil(totalCount / perPage);
 
-    return res.status(200).send(
-      responseData(200, true, "OK", null, {
-        users,
-        pagination: { currentPage, perPage, totalCount, totalPages },
-        imgPath: imgHelper.generateImgPath(req),
-      })
-    );
-  } catch (error) {
-    if (error != null && error instanceof Error) {
-      return res
-        .status(500)
-        .send(responseData(500, false, error.message, error, null));
-    }
-    return res
-      .status(500)
-      .send(responseData(500, false, "Internal server error", error, null));
-  }
-};
+//     return res.status(200).send(
+//       responseData(200, true, "OK", null, {
+//         users,
+//         pagination: { currentPage, perPage, totalCount, totalPages },
+//         imgPath: imgHelper.generateImgPath(req),
+//       })
+//     );
+//   } catch (error) {
+//     if (error != null && error instanceof Error) {
+//       return res
+//         .status(500)
+//         .send(responseData(500, false, error.message, error, null));
+//     }
+//     return res
+//       .status(500)
+//       .send(responseData(500, false, "Internal server error", error, null));
+//   }
+// };
 
 const getUserById = async (req: Request, res: Response): Promise<Response> => {
   try {
@@ -228,7 +229,7 @@ const importUsers = async (req: Request, res: Response) => {
       .catch((error) =>
         res
           .status(500)
-          .send(responseData(200, true, "Import failed", null, null))
+          .send(responseData(200, true, "Import failed", error, null))
       );
   } catch (error) {
     console.error("Error importing data:", error);
@@ -237,7 +238,6 @@ const importUsers = async (req: Request, res: Response) => {
 };
 
 export default {
-  getAllUsers,
   getUsers,
   getUserById,
   createUser,

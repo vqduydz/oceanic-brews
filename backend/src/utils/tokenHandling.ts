@@ -4,8 +4,6 @@ import dotenv from "dotenv";
 dotenv.config();
 
 interface UserData {
-  firstName: string | null;
-  lastName: string | null;
   email: string | null;
   verified: boolean | null;
   active: boolean | null;

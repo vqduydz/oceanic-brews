@@ -8,9 +8,11 @@
         <ion-title>{{ headerTitle }}</ion-title>
       </div>
       <div style="display: flex">
+        @if (currentShow !=='order') {
         <ion-button color="primary" (click)="presentModal({action:'import'})">
           import
         </ion-button>
+        }
         <ion-button color="success" (click)="presentModal({action:'create'})">
           Create
         </ion-button>
@@ -21,6 +23,16 @@
 <ion-content>
   @if(currentShow==='user'){
   <app-user-management
+    (userEditing)="presentModal($event)"
+    (userDeleting)="presentModal($event)"
+  />
+  } @if(currentShow==='category'){
+  <app-category-management
+    (userEditing)="presentModal($event)"
+    (userDeleting)="presentModal($event)"
+  />
+  }@if(currentShow==='menu'){
+  <app-menu-management
     (userEditing)="presentModal($event)"
     (userDeleting)="presentModal($event)"
   />

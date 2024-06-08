@@ -14,9 +14,8 @@ function checkImage(url: string): Promise<string | null> {
     };
 
     timer = window.setTimeout(function () {
-      img.src = '//!!!!/noexist.jpg';
       resolve(null);
-    }, 2000);
+    }, 1500);
 
     img.src = url;
   });

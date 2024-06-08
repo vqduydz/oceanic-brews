@@ -1,7 +1,7 @@
 import { DataTypes, Model, Optional } from "sequelize";
 import connection from "../../config/dbConnect";
+import { MenuAttributes } from "../../interface";
 import Category from "./category";
-import { MenuAttributes } from ".";
 
 export interface MenuInput extends Optional<MenuAttributes, "id"> {}
 export interface MenuOutput extends Required<MenuAttributes> {}
@@ -14,9 +14,7 @@ class Menu extends Model<MenuAttributes, MenuInput> implements MenuAttributes {
   public categoryId!: number;
   public price!: number;
   public desc!: string;
-  public favoriteBy!: string;
   public active!: boolean;
-
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
 }
@@ -35,7 +33,6 @@ Menu.init(
     categoryId: { allowNull: false, type: DataTypes.STRING },
     price: { allowNull: false, type: DataTypes.STRING },
     desc: { type: DataTypes.STRING },
-    favoriteBy: { type: DataTypes.STRING },
     active: { allowNull: false, type: DataTypes.BOOLEAN },
   },
   { timestamps: true, sequelize: connection, underscored: false }

@@ -1,10 +1,10 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CustomModalComponent } from './custom-modal.component';
-import { IonicModule } from '@ionic/angular';
+import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { EditUserModule } from './edit-user/edit-user.module';
+import { IonicModule } from '@ionic/angular';
 import { CreateUserModule } from './create-user/create-user.module';
+import { CustomModalComponent } from './custom-modal.component';
+import { EditUserModule } from './edit-user/edit-user.module';
 
 @NgModule({
   declarations: [CustomModalComponent],

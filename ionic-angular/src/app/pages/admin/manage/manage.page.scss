@@ -11,22 +11,23 @@ ion-content {
   }
 }
 
-.header {
+ion-toolbar {
   min-width: 768px;
   height: 60px;
   background-color: #0054e9;
   display: flex;
   align-items: center;
   padding: 0.2rem 1rem;
-  ion-buttons,
+  ion-button {
+    font-weight: 700;
+    --ion-color-success-contrast: #fff;
+  }
   ion-title,
   app-avatar,
   ion-menu-button {
-    --color: #fff !important;
-    color: #fff !important;
     width: fit-content;
     font-weight: 700;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
   }
 }
 .model-container {

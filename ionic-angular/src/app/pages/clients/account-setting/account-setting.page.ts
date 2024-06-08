@@ -57,11 +57,9 @@ export class AccountSettingPage {
   }
 
   editEnable(element: IonInput) {
-    //set readOnly = false
-
     element.getInputElement().then((element) => {
-      element.readOnly = false; // Set readonly to false
-      element.focus(); // Set focus
+      element.readOnly = false;
+      element.focus();
     });
   }
 

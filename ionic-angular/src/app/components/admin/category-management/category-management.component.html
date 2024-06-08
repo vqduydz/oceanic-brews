@@ -1,3 +1,117 @@
-<p>
-  category-management works!
-</p>
+@if(loading){
+<p>loading...</p>
+
+} @else {
+<div class="searchTable">
+  <ion-input
+    type="text"
+    class="ion-text-center"
+    placeholder="🔍 Type to filter the name column..."
+    (ionInput)="updateFilter($event)"
+  />
+</div>
+<ngx-datatable
+  #table
+  class="material"
+  [columnMode]="ColumnMode.force"
+  [headerHeight]="50"
+  [footerHeight]="50"
+  rowHeight="auto"
+  [limit]="20"
+  [rows]="rows"
+>
+  <ngx-datatable-column
+    [canAutoResize]="false"
+    name="No."
+    headerClass="header-class"
+    cellClass="cell-class"
+    [width]="50"
+    [sortable]="false"
+  >
+    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex">
+      {{ rowIndex + 1 }}
+    </ng-template>
+  </ngx-datatable-column>
+
+  <ngx-datatable-column
+    name="Img"
+    headerClass="header-class"
+    cellClass="cell-class"
+    [sortable]="false"
+    [canAutoResize]="false"
+  >
+    <ng-template ngx-datatable-cell-template let-row="row">
+      <app-image
+        style="display: flex"
+        [imgUrl]="row.imgUrl"
+        [css]="{
+          borderRadius: '6px',
+          height: '60px',
+          border: '1px solid #d7d8da'
+        }"
+      ></app-image>
+    </ng-template>
+  </ngx-datatable-column>
+
+  <ngx-datatable-column
+    name="Name"
+    headerClass="header-class"
+    cellClass="cell-class"
+  >
+    <ng-template
+      ngx-datatable-cell-template
+      let-row="row"
+      (mouseenter)="testHover(row)"
+    >
+      {{ row.name }}
+    </ng-template>
+  </ngx-datatable-column>
+
+  <ngx-datatable-column
+    name="Active"
+    headerClass="header-class"
+    cellClass="cell-class"
+    [canAutoResize]="false"
+  >
+    <ng-template ngx-datatable-cell-template let-row="row">
+      {{ row.active ? "✅" : "❌" }}
+    </ng-template>
+  </ngx-datatable-column>
+
+  <ngx-datatable-column
+    name="CreatedAT"
+    headerClass="header-class"
+    cellClass="cell-class"
+    [minWidth]="150"
+    [maxWidth]="200"
+  >
+    <ng-template ngx-datatable-cell-template let-row="row">
+      {{ date(row.createdAt) }}
+    </ng-template>
+  </ngx-datatable-column>
+
+  <ngx-datatable-column
+    name="Actions"
+    [sortable]="false"
+    [canAutoResize]="false"
+    [width]="110"
+    headerClass="header-class"
+    cellClass="cell-class"
+  >
+    <ng-template ngx-datatable-cell-template let-row="row">
+      <ion-button
+        color="warning"
+        (click)="userEditing.emit({ action: 'edit', currentData: row })"
+        ><ion-icon name="pencil-outline"></ion-icon
+      ></ion-button>
+      <ion-button
+        [disabled]="row.role === 'root'"
+        color="danger"
+        (click)="userDeleting.emit({ action: 'delete', currentData: row })"
+        ><ion-icon name="trash-outline"></ion-icon
+      ></ion-button>
+    </ng-template>
+  </ngx-datatable-column>
+</ngx-datatable>
+
+}

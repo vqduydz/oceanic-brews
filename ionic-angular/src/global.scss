@@ -38,6 +38,10 @@
 
 @import "./theme/fonts.scss";
 
+// swiper
+
+//
+
 * {
   font-family: Gilroy;
   user-select: none;
@@ -54,8 +58,10 @@ html {
 }
 
 ion-content {
-  --padding-start: 0.5rem;
-  --padding-end: 0.5rem;
+  --padding-top: 0.2rem;
+  --padding-bottom: 0.2rem;
+  --padding-start: 0.2rem;
+  --padding-end: 0.2rem;
 }
 
 app-rating {
@@ -66,6 +72,12 @@ app-rating {
 
 p {
   margin: 0.5rem 0;
+}
+
+ion-select-option {
+  & + ion-select-option {
+    border-top: 1px solid #d7d8da;
+  }
 }
 
 /////////////////////table
@@ -88,7 +100,10 @@ p {
   align-items: center;
   // font-size: 1rem;
   &.name {
-    justify-content: left;
+    justify-content: center;
+  }
+  &.created-at {
+    word-wrap: break-word !important;
   }
 }
 
@@ -99,6 +114,9 @@ p {
 
   &.name {
     text-align: left !important;
+  }
+  &.created-at {
+    word-wrap: break-word !important;
   }
 }
 
@@ -126,19 +144,22 @@ p {
   align-items: center;
   justify-content: center;
   text-wrap: wrap !important;
-  word-wrap: break-all !important;
-  &.name {
-    justify-content: left;
-  }
+
+  // word-wrap: break-all !important;
+  // &.name {
+  //   justify-content: left;
+  // }
+  // &.created-at {
+  //   word-wrap: break-word !important;
+  // }
 }
 
 datatable-scroller {
   width: auto !important;
 }
-
-div.datatable-body-cell-label {
+datatable-body-cell.email > div.datatable-body-cell-label {
   text-wrap: wrap !important;
-  word-break: break-all !important;
+  word-break: break-all;
 }
 
 .select-wrapper {
@@ -161,6 +182,15 @@ div.datatable-body-cell-label {
 //   justify-content: center;
 // }
 
+ion-button {
+  text-transform: uppercase;
+}
+
+ion-modal.cart-delete-modal {
+  --border-radius: 6px;
+  --height: 150px;
+}
+
 @media only screen and (min-width: 768px) {
   //modal
   .custom-modal {
@@ -170,25 +200,37 @@ div.datatable-body-cell-label {
     &.create-user {
       --height: 720px;
     }
+    &.create-category,
+    &.edit-category {
+      --height: 300px;
+    }
     &.edit-user {
       --height: 550px;
     }
+    &.import-user,
     &.delete-user,
-    &.import-user {
+    &.import-category,
+    &.delete-category,
+    &.import-menu,
+    &.delete-menu {
       --max-height: 200px;
       --max-width: 400px;
+      display: flex;
+    }
+    &.create-menu,
+    &.edit-menu {
+      --height: 440px;
     }
   }
   .ion-page {
     display: flex;
   }
-
   //.toast
-
   .custom-toast {
     --min-width: 100px;
     --max-width: 400px;
     color: #fff !important;
+    text-align: center;
   }
 }
 // [class^="delete-"]

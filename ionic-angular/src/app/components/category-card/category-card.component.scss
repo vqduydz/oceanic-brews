@@ -1,31 +1,24 @@
-.wrapper {
+.card {
+  text-align: center;
+  width: 100%;
+  padding: 0.3rem;
+  background: #f1f1f1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center;
-  .image-card {
-    background-color: #f3f3f3;
-    padding: 0.2rem;
-    border-radius: 1rem;
-    margin-bottom: 0.5rem;
-
-    ion-img {
-      opacity: 1;
-      border-radius: 1rem;
-      overflow: hidden;
-    }
-  }
-  p {
-    color: grey;
+  position: relative;
+  border-radius: 0.5rem;
+  ion-img {
+    opacity: 0.8;
+    border-radius: 0.5rem;
+    overflow: hidden;
   }
 }
-
-// .wrapper.active {
-//   .image-card {
-//     background-color: #6b45bc;
-//   }
-//   p {
-//     color: #1d1d1d;
-//     font-weight: 600;
-//   }
-// }
+p {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+  color: #666;
+  font-size: 1rem;
+  text-transform: uppercase;
+}

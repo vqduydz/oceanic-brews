@@ -2,8 +2,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, lastValueFrom } from 'rxjs';
-import { CurrentUser, ResCurrentUser } from 'src/app/interface';
-
 @Injectable({
   providedIn: 'root',
 })
@@ -79,7 +77,6 @@ export class AuthService {
   getNewAccessToken(): string {
     let newAccessToken!: string;
     this.refreshToken().subscribe((data) => {
-      console.log({ data });
       if (data.ok) {
         newAccessToken = data.data.accessToken;
       }

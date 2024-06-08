@@ -1,7 +1,7 @@
 import { DataTypes, Model, Optional } from "sequelize";
 import connection from "../../config/dbConnect";
+import { CategoryAttributes } from "../../interface";
 import Menu from "./menu";
-import { CategoryAttributes } from ".";
 
 export interface CategoryInput extends Optional<CategoryAttributes, "id"> {}
 export interface CategoryOutput extends Required<CategoryAttributes> {}
@@ -15,7 +15,6 @@ class Category
   public imgUrl!: string;
   public slug!: string;
   public active!: boolean;
-
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
 }
@@ -36,6 +35,4 @@ Category.init(
   { timestamps: true, sequelize: connection, underscored: false }
 );
 
-Category.hasMany(Menu, { foreignKey: "categoryId", as: "menus" });
-// Menu.belongsTo(Category, { foreignKey: "categoryId", as: "category" });
 export default Category;

@@ -55,7 +55,3 @@ https
     console.error("Unable to connect to the database:", error);
   }
 })();
-
-// set default timezone
-process.env.TZ = "Asia/Bangkok";
-console.log(new Date().toString());

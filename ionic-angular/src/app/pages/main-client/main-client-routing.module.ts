@@ -24,12 +24,6 @@ const routes: Routes = [
           ),
       },
       {
-        path: 'cart',
-        canActivate: [canActivate],
-        loadChildren: () =>
-          import('../clients/cart/cart.module').then((m) => m.CartPageModule),
-      },
-      {
         path: 'orders',
         canActivate: [canActivate],
         loadChildren: () =>

@@ -1,0 +1,44 @@
+<ion-item-sliding>
+  <ion-item>
+    <div class="block">
+      <div><ion-checkbox /></div>
+      <app-image
+        (click)="cartItemCardClicked.emit()"
+        [imgUrl]="imgPath + cartItem.menu.imgUrl"
+        [css]="{
+          borderRadius: '6px',
+          height: '90px',
+          border: '1px solid #d7d8da'
+        }"
+      ></app-image>
+      <div class="desc">
+        <p class="name-item">{{ cartItem.menu.name }}</p>
+        <div class="action-wrap">
+          <div class="action">
+            <ion-button
+              [disabled]="cartItem.quantity <= 1"
+              (click)="changeQuantity(cartItem, 'decrease')"
+            >
+              <ion-icon name="remove"></ion-icon>
+            </ion-button>
+            <div class="counter">{{ cartItem.quantity }}</div>
+            <ion-button
+              [disabled]="cartItem.quantity >= 5"
+              (click)="changeQuantity(cartItem, 'increase')"
+            >
+              <ion-icon name="add"></ion-icon>
+            </ion-button>
+          </div>
+          <div class="price">
+            {{ cartItem.quantity * cartItem.menu.price | number }}<span>đ</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ion-item>
+  <ion-item-options side="end">
+    <ion-item-option (click)="deleteCartItem(cartItem)" color="danger">
+      <ion-icon slot="icon-only" name="trash"></ion-icon>
+    </ion-item-option>
+  </ion-item-options>
+</ion-item-sliding>

@@ -32,7 +32,6 @@ export class LoginPage {
       const formValue = this.loginForm.value;
       this.authService.login(formValue).subscribe((data) => {
         if (data.ok) {
-          console.log(data);
           const accessToken = data.data.accessToken;
           this.authService.setItemToLocalStorage('access-token', accessToken);
           this.authService.initCurrentUser();

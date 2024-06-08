@@ -81,6 +81,12 @@ const routes: Routes = [
         (m) => m.MainClientPageModule
       ),
   },
+  {
+    path: 'cart',
+    canActivate: [canActivate],
+    loadChildren: () =>
+      import('./pages/clients/cart/cart.module').then((m) => m.CartPageModule),
+  },
 ];
 
 @NgModule({

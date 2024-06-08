@@ -1,7 +1,12 @@
 ion-content {
-  --padding-start: 0;
-  --padding-end: 0;
+  --offset-bottom: 0px;
+  --offset-top: 0px;
+  --padding-bottom: 0px;
+  --padding-end: 0px;
+  --padding-start: 0px;
+  --padding-top: 0px;
 }
+
 .header {
   position: sticky;
   top: 0;
@@ -82,11 +87,15 @@ ion-content {
   .menus {
     margin-top: 1rem;
     border-radius: 0.5rem;
-    background: #fff;
-    padding: 0.2rem;
+    // background: #fff;
+    // padding: 0.2rem;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 0.2rem;
+    .app-menu-card {
+      border: 2px solid #ddd;
+      border-radius: 0.5rem;
+    }
   }
   .reviews {
     padding-bottom: 0.2rem;

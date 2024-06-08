@@ -1,5 +1,7 @@
-@if (url) {
-<ion-img [ngStyle]="css" [src]="url" [alt]="desc || ''" />
-}@else {
-<ion-img [ngStyle]="css" src="assets/images/update.png" [alt]="desc || ''" />
-}
+<img
+  routerLink
+  [style]="css"
+  [src]="imgUrl || 'assets/images/update.png'"
+  [alt]="desc || ''"
+/>
+<!-- cache-control="no-cache" -->

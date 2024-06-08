@@ -10,6 +10,7 @@ export class ImageComponent {
   @Input() imgUrl!: string;
   @Input() desc!: string;
   @Input() css: Partial<CSSStyleDeclaration> = {};
+
   url!: string | null;
 
   ngOnInit() {

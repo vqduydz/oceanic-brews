@@ -1,10 +1,17 @@
 <div class="card">
   <div (click)="menuCardClicked.emit()">
-    <app-image [css]="ImageCss" [imgUrl]="imgPath + menu.imgUrl" />
+    <app-image
+      [css]="{
+        borderRadius: '6px',
+
+        border: '1px solid #d7d8da'
+      }"
+      [imgUrl]="imgPath + menu.imgUrl"
+    />
     <div class="card-content">
       <h3 class="ion-no-margin title">{{ menu.name }}</h3>
       <h2 class="ion-no-margin subtitle">
-        {{ menu.price | number }}<span>vnđ</span>
+        {{ menu.price | number }}<span>đ</span>
       </h2>
     </div>
   </div>

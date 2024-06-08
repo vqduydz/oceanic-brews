@@ -2,18 +2,30 @@ export interface Category {
   id: number;
   name: string;
   slug: string;
-  imgUrl: string;
+  imgUrl: string | null;
   active: boolean;
 }
 
 export interface Menu {
   id: number;
   name: string;
-  imgUrl: string;
+  imgUrl: string | null;
   slug: string;
   categoryId: number;
   price: number;
   active: boolean;
+  desc?: string;
+}
+
+export interface MenuC {
+  id: number;
+  name: string;
+  imgUrl: string | null;
+  slug: string;
+  categoryId: number;
+  price: number;
+  active: boolean;
+  categoryName: string;
   desc?: string;
 }
 
@@ -52,23 +64,31 @@ export interface ResMenus {
 }
 
 export interface CurrentUser {
-  id?: number;
-  email?: string;
+  id: number;
+  email: string;
   firstName?: string;
   lastName?: string;
   phoneNumber?: number;
   gender?: string;
   avatar?: string;
   places?: string;
-  active?: boolean;
-  verified?: boolean;
+  active: boolean;
+  verified: boolean;
   birthday?: Date;
   favorites?: string;
   role?: string;
   createdAt?: Date;
   updatedAt?: Date;
 }
+
 export interface ResCurrentUser {
   user: CurrentUser;
   imgPath: string;
+}
+
+export interface CartItem {
+  id: number;
+  userId: number;
+  menuId: number;
+  quantity: number;
 }

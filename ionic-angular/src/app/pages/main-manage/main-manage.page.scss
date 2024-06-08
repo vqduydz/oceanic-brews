@@ -6,7 +6,7 @@
 ion-content,
 ion-menu {
   --side-min-width: 150px;
-  --side-max-width: 250px;
+  --side-max-width: 270px;
 }
 ion-menu ion-content {
   --background: var(--ion-item-background, var(--ion-background-color, #fff));
@@ -82,14 +82,16 @@ ion-menu.md ion-item.selected ion-icon {
 
 ion-menu.md ion-item ion-icon {
   margin-inline-end: 16px;
-  color: #616e7e;
+  color: #424242;
+  // color: #616e7e;
 }
 
 ion-menu.md ion-item ion-label {
   font-weight: 700;
 }
 .item {
-  --color: #616e7e;
+  --color: #424242;
+  // --color: #616e7e;
 }
 
 ion-menu.ios ion-content {

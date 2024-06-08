@@ -10,4 +10,13 @@ export class CategoryCardComponent {
   @Input() category!: Category;
   @Input() imgPath!: string;
   @Output() categoryClicked = new EventEmitter();
+  ImageCss: Partial<CSSStyleDeclaration> = {};
+
+  ngOnInit() {
+    this.ImageCss = {
+      display: 'block',
+      overflow: 'hidden',
+      borderRadius: '0.5rem',
+    };
+  }
 }

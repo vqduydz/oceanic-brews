@@ -12,7 +12,11 @@ const sendImg = (res: Response, filePath: string) =>
   });
 
 const generateImgPath = (req: Request) => {
-  return req.protocol + "://" + req.get("host") + "/api/images/";
+  return req.protocol + "://" + req.get("host") + "/api/image/";
 };
 
-export default { sendImg, generateImgPath };
+const generateAvatar = (req: Request) => {
+  return req.protocol + "://" + req.get("host") + "/api/avatar/";
+};
+
+export default { sendImg, generateImgPath, generateAvatar };

@@ -34,7 +34,6 @@ log.txt
 
 # Node
 */node_modules
-*/node_modules
 npm-debug.log
 yarn-error.log
 
@@ -73,3 +72,6 @@ testem.log
 .DS_Store
 Thumbs.db
 */uploads
+
+
+*/android

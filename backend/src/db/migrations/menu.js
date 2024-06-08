@@ -15,7 +15,6 @@ module.exports = {
       categoryId: { type: Sequelize.INTEGER, allowNull: false },
       price: { allowNull: false, type: Sequelize.INTEGER },
       desc: { type: Sequelize.TEXT },
-      favoriteBy: { type: Sequelize.TEXT },
       active: { allowNull: false, type: Sequelize.BOOLEAN },
       createdAt: { allowNull: false, type: Sequelize.DATE },
       updatedAt: { allowNull: false, type: Sequelize.DATE },

@@ -44,7 +44,7 @@
         4.75
         <i>(1.212 lượt đánh giá)</i>
       </h5>
-      <p class="ion-no-marign">{{menu.menu.price | number }}<span>vnđ</span></p>
+      <p class="ion-no-marign">{{menu.menu.price | number }}<span>đ</span></p>
     </div>
     <div class="desc block">
       <h2>Mô tả "{{menu.menu.name}}"</h2>
@@ -55,10 +55,11 @@
       <div class="menus">
         @if(suggestedMenus){ @for (menu of suggestedMenus.menus; track $index) {
         <app-menu-card
+          class="app-menu-card"
           (menuCardClicked)="goToDetail(menu.slug)"
           [menu]="menu"
           [imgPath]="suggestedMenus.imgPath"
-        ></app-menu-card>
+        />
         } }@else {
         <p>Loading...</p>
         }
@@ -145,7 +146,7 @@
     </div>
   </div>
   <div class="btn">
-    <ion-button> Add to Cart </ion-button>
+    <ion-button (click)="addToCart()"> Add to Cart </ion-button>
   </div>
   } }@else {
   <div class="card">Loading...</div>

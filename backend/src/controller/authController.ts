@@ -15,8 +15,6 @@ const register = async (req: Request, res: Response): Promise<Response> => {
   try {
     const { password, confirmPassword, ...data } = req.body;
 
-    console.log({ data });
-
     const passwordHashed = await passwordHandling.hashing(password);
     const user = await User.create({
       ...data,
@@ -29,7 +27,7 @@ const register = async (req: Request, res: Response): Promise<Response> => {
     return res.status(201).send(
       responseData(201, true, "Registered", null, {
         user: { ...resData },
-        imgPath: imgHelper.generateImgPath(req),
+        imgPath: imgHelper.generateAvatar(req),
       })
     );
   } catch (error: any) {
@@ -42,9 +40,6 @@ const register = async (req: Request, res: Response): Promise<Response> => {
 const userLogin = async (req: Request, res: Response): Promise<Response> => {
   try {
     const { email, password } = req.body;
-
-    console.log("46--:", email, password);
-
     const user = await User.findOne({
       attributes: [
         "id",
@@ -69,17 +64,8 @@ const userLogin = async (req: Request, res: Response): Promise<Response> => {
         );
     }
 
-    console.log(user.dataValues);
-
     const { email: e, verified, active, role } = user.dataValues;
-    const dataGenerate = {
-      email: e,
-      verified,
-      active,
-      role,
-    };
-
-    console.log("80---:", dataGenerate);
+    const dataGenerate = { email: e, verified, active, role };
 
     const accessToken = tokenHandling.generateToken(dataGenerate, "300s");
     const refreshToken = tokenHandling.generateRefreshToken(dataGenerate);
@@ -123,8 +109,6 @@ const refreshToken = async (req: Request, res: Response): Promise<Response> => {
 
     const accessToken = tokenHandling.generateToken(
       {
-        firstName: decodedUser.firstName,
-        lastName: decodedUser.lastName,
         email: decodedUser.email,
         verified: decodedUser.verified,
         active: decodedUser.active,
@@ -277,7 +261,7 @@ const getCurrentUser = async (
     return res.status(200).send(
       responseData(200, true, "ok", null, {
         user,
-        imgPath: imgHelper.generateImgPath(req),
+        imgPath: imgHelper.generateAvatar(req),
       })
     );
   } catch (error) {
@@ -306,7 +290,7 @@ const selfUpdateUser = async (
     return res.status(200).send(
       responseData(200, true, "Update successful", null, {
         user,
-        imgPath: imgHelper.generateImgPath(req),
+        imgPath: imgHelper.generateAvatar(req),
       })
     );
   } catch (error) {

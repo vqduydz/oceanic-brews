@@ -1,7 +1,6 @@
 import { DataTypes, Model, Optional } from "sequelize";
 import connection from "../../config/dbConnect";
-import Category from "./category";
-import { UserAttributes } from ".";
+import { UserAttributes } from "../../interface";
 
 export interface UserInput extends Optional<UserAttributes, "id"> {}
 export interface UserOutput extends Required<UserAttributes> {}
@@ -21,7 +20,6 @@ class User extends Model<UserAttributes, UserInput> implements UserAttributes {
   public verified!: boolean;
   public birthday!: Date;
   public favorites!: string;
-
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
 }

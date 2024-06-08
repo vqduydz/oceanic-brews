@@ -7,7 +7,7 @@ import {
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, of, throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { AuthService } from '../auth/auth.service';
 
@@ -17,9 +17,7 @@ const requiresAuth = (url: string): boolean => {
     url.includes('/register') ||
     url.includes('/fogot-password') ||
     url.includes('/reset-password') ||
-    url.includes('/refresh-token') ||
-    url.includes('/categories') ||
-    url.includes('/menu')
+    url.includes('/refresh-token')
   );
 };
 

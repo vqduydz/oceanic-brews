@@ -102,6 +102,7 @@ export class ManagePage {
       animated: true,
       cssClass: ['custom-modal', `${this.action}-${this.currentShow}`],
     });
+    console.log(this.action, this.currentShow);
     return await modal.present();
   }
 

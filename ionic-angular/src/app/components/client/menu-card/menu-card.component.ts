@@ -10,7 +10,7 @@ export class MenuCardComponent {
   @Input() menu!: Menu;
   @Input() imgPath!: string;
   @Output() menuCardClicked = new EventEmitter();
-  ImageCss: Partial<CSSStyleDeclaration> = {};
+  ImageCss: Partial<CSSStyleDeclaration> = { border: '1px solid grey' };
 
   ngOnInit() {
     this.ImageCss = {

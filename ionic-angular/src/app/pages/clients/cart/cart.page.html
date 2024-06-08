@@ -1,1 +1,262 @@
-<ion-content class="container"><div class="content">Cart</div></ion-content>
+<div class="header">
+  <ion-buttons>
+    <ion-button [routerLink]="'/menus'">
+      <ion-icon color="light" name="arrow-back-outline" />
+    </ion-button>
+  </ion-buttons>
+  <ion-title>Cart</ion-title>
+</div>
+
+@if (cartItems) { @if (cartItems.length) {
+<ion-content>
+  <ion-list>
+    <!-- @for (item of cartItems; track $index) {
+    <ion-item-sliding>
+      <ion-item>
+        <div class="block">
+          <div>
+            <ion-checkbox
+              [checked]="setChecked(item)"
+              (ionChange)="setCartItemsSelect($event,item)"
+            />
+          </div>
+          <app-image
+            (click)="goToDetail(item.menu.slug)"
+            [imgUrl]="imgPath + item.menu.imgUrl"
+            [css]="{
+                borderRadius: '6px',
+                height: '90px',
+                border: '1px solid #d7d8da'
+              }"
+          ></app-image>
+          <div class="desc">
+            <p class="name-item">{{ item.menu.name }}</p>
+            <div class="action-wrap">
+              <div class="action">
+                <ion-button
+                  [disabled]="item.quantity <= 1"
+                  (click)="changeQuantity(item, 'decrease',setChecked(item))"
+                >
+                  <ion-icon name="remove"/>
+                </ion-button>
+                <div class="counter">{{ item.quantity }}</div>
+                <ion-button
+                  [disabled]="item.quantity >= 5"
+                  (click)="changeQuantity(item, 'increase',setChecked(item))"
+                >
+                  <ion-icon name="add"/>
+                </ion-button>
+              </div>
+              <div class="price">
+                {{ item.quantity * item.menu.price | number }}<span>đ</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ion-item>
+      <ion-item-options side="end">
+        <ion-item-option (click)="setOpen(true)" color="danger">
+          <ion-icon slot="icon-only" name="trash"/>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+    <ion-modal class="cart-delete-modal" [isOpen]="isModalOpen">
+      <ng-template>
+        <ion-content class="ion-padding">
+          <p style="text-align: center">
+            Remove "<b>{{item.menu.name}}</b>" from the cart
+          </p>
+          <div
+            style="
+              display: flex;
+              padding: 0.5rem;
+              align-items: center;
+              justify-content: center;
+            "
+          >
+            <ion-button
+              class="cancle"
+              color="light"
+              block
+              (click)="setOpen(false)"
+            >
+              cancle
+            </ion-button>
+            <ion-button block (click)="deleteCartItem(item)">
+              submit
+            </ion-button>
+          </div>
+        </ion-content>
+      </ng-template>
+    </ion-modal>
+        } -->
+    <!-- <ion-item-sliding *ngFor="let item of cartItems">
+      <ion-item>
+        <div class="block">
+          <div>
+            <ion-checkbox
+              [checked]="setChecked(item)"
+              (ionChange)="setCartItemsSelect($event,item)"
+            />
+          </div>
+          <app-image
+            (click)="goToDetail(item.menu.slug)"
+            [imgUrl]="imgPath + item.menu.imgUrl"
+            [css]="{
+                    borderRadius: '6px',
+                    height: '80px',
+                    border: '1px solid #d7d8da'
+                  }"
+          ></app-image>
+          <div class="desc">
+            <p class="name-item">{{ item.menu.name }}</p>
+            <div class="action-wrap">
+              <div class="action">
+                <ion-button
+                  color="medium"
+                  [disabled]="item.quantity <= 1"
+                  (click)="changeQuantity(item, 'decrease',setChecked(item))"
+                >
+                  <ion-icon name="remove" />
+                </ion-button>
+                <div class="counter">{{ item.quantity }}</div>
+                <ion-button
+                  color="medium"
+                  [disabled]="item.quantity >= 5"
+                  (click)="changeQuantity(item, 'increase',setChecked(item))"
+                >
+                  <ion-icon name="add" />
+                </ion-button>
+              </div>
+              <div class="price">
+                {{ item.quantity * item.menu.price | number }}<span>đ</span>
+              </div>
+              <ion-icon
+                (click)="setItemDelete(item)"
+                (click)="setOpen(true)"
+                color="danger"
+                style="font-size: 20px"
+                name="trash-outline"
+              />
+            </div>
+          </div>
+        </div>
+      </ion-item>
+      <ion-item-options side="end">
+        <ion-item-option
+          (click)="setItemDelete(item)"
+          (click)="setOpen(true)"
+          color="danger"
+        >
+          <ion-icon slot="icon-only" name="trash" />
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding> -->
+
+    @for (item of cartItems; track $index) {
+    <ion-item-sliding>
+      <ion-item>
+        <div class="block">
+          <div>
+            <ion-checkbox
+              [checked]="setChecked(item)"
+              (ionChange)="setCartItemsSelect($event,item)"
+            />
+          </div>
+          <app-image
+            (click)="goToDetail(item.menu.slug)"
+            [imgUrl]="imgPath + item.menu.imgUrl"
+            [css]="{
+                      borderRadius: '6px',
+                      height: '80px',
+                      border: '1px solid #d7d8da'
+                    }"
+          ></app-image>
+          <div class="desc">
+            <p class="name-item">{{ item.menu.name }}</p>
+            <div class="action-wrap">
+              <div class="action">
+                <ion-button
+                  color="medium"
+                  [disabled]="item.quantity <= 1"
+                  (click)="changeQuantity(item, 'decrease',setChecked(item))"
+                >
+                  <ion-icon name="remove" />
+                </ion-button>
+                <div class="counter">{{ item.quantity }}</div>
+                <ion-button
+                  color="medium"
+                  [disabled]="item.quantity >= 5"
+                  (click)="changeQuantity(item, 'increase',setChecked(item))"
+                >
+                  <ion-icon name="add" />
+                </ion-button>
+              </div>
+              <div class="price">
+                {{ item.quantity * item.menu.price | number }}<span>đ</span>
+              </div>
+              <ion-icon
+                (click)="setItemDelete(item)"
+                (click)="setOpen(true)"
+                color="danger"
+                style="font-size: 20px"
+                name="trash-outline"
+              />
+            </div>
+          </div>
+        </div>
+      </ion-item>
+      <ion-item-options side="end">
+        <ion-item-option
+          (click)="setItemDelete(item)"
+          (click)="setOpen(true)"
+          color="danger"
+        >
+          <ion-icon slot="icon-only" name="trash" />
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+    }
+  </ion-list>
+</ion-content>
+
+@if (itemDelete) {
+<div class="overlay" (click)="setOpen(false)"></div>
+<div class="ion-padding cart-delete-modal">
+  <p style="text-align: center">Remove "<b>{{itemDelete.menu.name}}</b>"</p>
+  <div
+    style="
+      display: flex;
+      padding: 0.5rem;
+      align-items: center;
+      justify-content: space-around;
+    "
+  >
+    <ion-button class="cancle" color="light" block (click)="setOpen(false)">
+      cancle
+    </ion-button>
+    <ion-button block (click)="deleteCartItem(itemDelete)"> submit </ion-button>
+  </div>
+</div>
+}
+<ion-footer>
+  <div class="footer-inner">
+    <ion-checkbox
+      (ionChange)="setAllCartItemsSelect($event)"
+      [checked]="cartItems.length===cartItemsSelect.length"
+    />
+    <p class="price">{{total|number}}<span>đ</span></p>
+    <ion-button
+      [disabled]="!cartItemsSelect.length"
+      color="primary"
+      (click)="checkout()"
+    >
+      Check out
+    </ion-button>
+  </div>
+</ion-footer>
+} @else {
+<div class="emty">emty</div>
+} }@else {
+<p>Loading...</p>
+}

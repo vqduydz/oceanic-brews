@@ -89,6 +89,20 @@ export class MenuPage {
     });
   }
 
+  addToCart() {
+    if (this.currentUser || this.menuLoaded)
+      this.http
+        .addToCart({
+          menuId: this.menu.menu.id,
+          userId: this.currentUser.user.id as number,
+          quantity: 1,
+        })
+        .subscribe(
+          () => this.http.initCartItems(this.currentUser.user.id as number),
+          (e) => console.log(e)
+        );
+  }
+
   ngOnDestroy() {
     if (this.subscription) this.subscription.unsubscribe();
   }

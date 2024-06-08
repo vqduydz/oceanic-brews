@@ -2,18 +2,21 @@
   <div><app-searchbar></app-searchbar></div>
   <h3 class="title">Categories</h3>
   <div>
-    <div class="categories">
-      @if(categoriesLoaded){ @for (category of categories.categories; track
-      $index) {
-      <app-category-card
-        [category]="category"
-        [imgPath]="categories.imgPath"
-      ></app-category-card>
-      } }@else {
-      <p>Loading...</p>
+    @if(categoriesLoaded) {
+    <swiper-container #swiperContainer>
+      @for (category of categories.categories; track $index) {
+      <swiper-slide>
+        <app-category-card [category]="category" [imgPath]="categories.imgPath">
+        </app-category-card>
+      </swiper-slide>
       }
-    </div>
+    </swiper-container>
+
+    } @else {
+    <p>Loading...</p>
+    }
   </div>
+
   <h3 class="title">Menus</h3>
   <div>
     <div class="menus">

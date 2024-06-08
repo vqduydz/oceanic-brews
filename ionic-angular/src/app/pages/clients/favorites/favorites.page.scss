@@ -13,15 +13,13 @@
     margin: 0;
     font-weight: 700;
     color: #fff;
+    font-size: 1.5rem;
   }
-}
-ion-content {
-  --padding-top: 0.5rem;
 }
 .menus {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-gap: 0.5rem;
+  grid-gap: 0.2rem;
 }
 .btn {
   position: fixed;
